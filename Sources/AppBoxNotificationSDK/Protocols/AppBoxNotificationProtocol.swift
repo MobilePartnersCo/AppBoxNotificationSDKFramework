@@ -14,6 +14,7 @@ import UserNotifications
     func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
     func savePushToken(token: String, pushYn: Bool)
     func savePushToken(token: String, pushYn: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func getPushToken() -> String?
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel?
     func setDebug(debugMode: Bool)
 }

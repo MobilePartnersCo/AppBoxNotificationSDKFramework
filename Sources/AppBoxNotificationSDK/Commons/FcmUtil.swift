@@ -13,7 +13,7 @@ class FcmUtil {
         Messaging.messaging().token { token, error in
             
             
-            let pushToken = token ?? AppBoxCore.shared.coreGetPushToken() ?? ""
+            let pushToken = token ?? AppBoxCoreFramework.shared.coreGetPushToken() ?? ""
             
             setToken(pushToken: pushToken, pushYn: nil) { (result: Result<AppBoxNotiResultModel, Error>) in
                 DispatchQueue.main.async {
@@ -24,7 +24,7 @@ class FcmUtil {
     }
     
     static func setToken(pushToken: String, pushYn: Bool?, completion: @escaping (Result<AppBoxNotiResultModel, any Error>) -> Void) {
-        AppBoxCore.shared.coreSaveDeviceToken(pushToken, pushYn: pushYn) { (result: Result<AppPushTokenApiModel, Error>) in
+        AppBoxCoreFramework.shared.coreSaveDeviceToken(pushToken, pushYn: pushYn) { (result: Result<AppPushTokenApiModel, Error>) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):

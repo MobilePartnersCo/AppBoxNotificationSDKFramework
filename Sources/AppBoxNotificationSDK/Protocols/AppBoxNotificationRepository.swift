@@ -21,7 +21,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
         let pId = projectId ?? ""
         
-        AppBoxCore.shared.coreSaveProjectId(pId)
+        AppBoxCoreFramework.shared.coreSaveProjectId(pId)
 
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
@@ -29,7 +29,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             completion?(model, nil)
         } else {
             ConfigData.shared.isFcmInit = false
-            AppBoxCore.shared.coreGetPushInfo() { (result: Result<AppPushInfoApiModel, Error>) in
+            AppBoxCoreFramework.shared.coreGetPushInfo() { (result: Result<AppPushInfoApiModel, Error>) in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let model):
@@ -97,11 +97,15 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
     }
     
+    func getPushToken() -> String? {
+        return AppBoxCoreFramework.shared.coreGetPushToken()
+    }
+    
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel? {
         if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {
             let model = AppBoxNotiModel(params: content.param)
             
-            AppBoxCore.shared.coreSavePushOpen(notiModel: content) { (result: Result<AppPushOpenApiModel, Error>) in
+            AppBoxCoreFramework.shared.coreSavePushOpen(notiModel: content) { (result: Result<AppPushOpenApiModel, Error>) in
                 switch result {
                 case .success(let model):
                     if !model.success {
@@ -117,6 +121,6 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func setDebug(debugMode: Bool) {
-        AppBoxCore.shared.coreSaveDebugMode(debugMode)
+        AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
     }
 }

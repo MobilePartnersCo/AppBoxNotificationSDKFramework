@@ -808,46 +808,6 @@
           },
           {
             "kind": "Var",
-            "name": "validUrl",
-            "printedName": "validUrl",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(AppBoxCore.ErrorHandler.Type) -> AppBoxCore.ErrorHandler",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ErrorHandler",
-                    "printedName": "AppBoxCore.ErrorHandler",
-                    "usr": "s:10AppBoxCore12ErrorHandlerO"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "AppBoxCore.ErrorHandler.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "ErrorHandler",
-                        "printedName": "AppBoxCore.ErrorHandler",
-                        "usr": "s:10AppBoxCore12ErrorHandlerO"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "s:10AppBoxCore12ErrorHandlerO8validUrlyA2CmF",
-            "mangledName": "$s10AppBoxCore12ErrorHandlerO8validUrlyA2CmF",
-            "moduleName": "AppBoxCore",
-            "spi_group_names": [
-              "AppBoxNotification_Internal"
-            ]
-          },
-          {
-            "kind": "Var",
             "name": "validIdx",
             "printedName": "validIdx",
             "children": [
@@ -921,6 +881,86 @@
             "declKind": "EnumElement",
             "usr": "s:10AppBoxCore12ErrorHandlerO12validEncryptyA2CmF",
             "mangledName": "$s10AppBoxCore12ErrorHandlerO12validEncryptyA2CmF",
+            "moduleName": "AppBoxCore",
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "validUrl",
+            "printedName": "validUrl",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(AppBoxCore.ErrorHandler.Type) -> AppBoxCore.ErrorHandler",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ErrorHandler",
+                    "printedName": "AppBoxCore.ErrorHandler",
+                    "usr": "s:10AppBoxCore12ErrorHandlerO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "AppBoxCore.ErrorHandler.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ErrorHandler",
+                        "printedName": "AppBoxCore.ErrorHandler",
+                        "usr": "s:10AppBoxCore12ErrorHandlerO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10AppBoxCore12ErrorHandlerO8validUrlyA2CmF",
+            "mangledName": "$s10AppBoxCore12ErrorHandlerO8validUrlyA2CmF",
+            "moduleName": "AppBoxCore",
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "validBundleId",
+            "printedName": "validBundleId",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(AppBoxCore.ErrorHandler.Type) -> AppBoxCore.ErrorHandler",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ErrorHandler",
+                    "printedName": "AppBoxCore.ErrorHandler",
+                    "usr": "s:10AppBoxCore12ErrorHandlerO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "AppBoxCore.ErrorHandler.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ErrorHandler",
+                        "printedName": "AppBoxCore.ErrorHandler",
+                        "usr": "s:10AppBoxCore12ErrorHandlerO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10AppBoxCore12ErrorHandlerO13validBundleIdyA2CmF",
+            "mangledName": "$s10AppBoxCore12ErrorHandlerO13validBundleIdyA2CmF",
             "moduleName": "AppBoxCore",
             "spi_group_names": [
               "AppBoxNotification_Internal"

@@ -30,9 +30,10 @@ import _SwiftConcurrencyShims
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId
-  @_spi(AppBoxNotification_Internal) case validUrl
   @_spi(AppBoxNotification_Internal) case validIdx
   @_spi(AppBoxNotification_Internal) case validEncrypt
+  @_spi(AppBoxNotification_Internal) case validUrl
+  @_spi(AppBoxNotification_Internal) case validBundleId
   @_spi(AppBoxNotification_Internal) case ServerError(Swift.String)
   @_spi(AppBoxNotification_Internal) case unknown
   @_spi(AppBoxNotification_Internal) public var errorCode: Swift.Int {

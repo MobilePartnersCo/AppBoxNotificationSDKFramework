@@ -6,7 +6,7 @@
 //
 
 import UIKit
-@_implementationOnly import Firebase
+import Firebase
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {

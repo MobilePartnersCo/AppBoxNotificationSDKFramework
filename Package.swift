@@ -31,10 +31,7 @@ let package = Package(
                 .product(name: "FirebaseMessaging", package: "firebase-ios-sdk")
             ],
             path: "Sources/AppBoxNotificationSDK",
-            resources: [.process("Resources/PrivacyInfo.xcprivacy")],
-            swiftSettings: [
-                .unsafeFlags(["-Xfrontend", "-enable-private-imports"])
-            ]
+            resources: [.process("Resources/PrivacyInfo.xcprivacy")]
         ),
 
     ]

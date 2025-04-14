@@ -15,17 +15,27 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     var messaging: Messaging? = nil
     
     func initSDK(projectId: String?) {
-        initSDK(projectId: projectId, completion: nil)
+        initSDK(projectId: projectId, debugMode: false, completion: nil)
+    }
+    
+    func initSDK(projectId: String?, debugMode: Bool) {
+        initSDK(projectId: projectId, debugMode: debugMode, completion: nil)
     }
     
     func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+        initSDK(projectId: projectId, debugMode: false, completion: completion)
+    }
+    
+    func initSDK(projectId: String?, debugMode: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+        AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
+        
         let pId = projectId ?? ""
         
         AppBoxCoreFramework.shared.coreSaveProjectId(pId)
 
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
-            let model = AppBoxNotiResultModel(token: "", message: "")
+            let model = AppBoxNotiResultModel(token: "", message: "이미 Firebase가 초기화 되어있습니다.")
             completion?(model, nil)
         } else {
             ConfigData.shared.isFcmInit = false
@@ -44,7 +54,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             FirebaseApp.configure(options: options)
                             
-                            let model = AppBoxNotiResultModel(token: "", message: "")
+                            let model = AppBoxNotiResultModel(token: "", message: "Firebase 초기화 성공")
                             completion?(model, nil)
                             
                         } else {
@@ -118,9 +128,5 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             return model
         }
         return nil
-    }
-    
-    func setDebug(debugMode: Bool) {
-        AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
     }
 }

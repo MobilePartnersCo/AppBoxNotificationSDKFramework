@@ -29,13 +29,15 @@ class FcmUtil {
                 switch result {
                 case .success(let model):
                     if model.success {
+                        AppBoxCoreFramework.shared.coreSavePushToken(pushToken)
                         completion(.success(AppBoxNotiResultModel(token: pushToken, message: "")))
                     } else {
                         let serverError = ErrorHandler.ServerError(model.message)
                         completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                     }
                 case .failure(let error):
-                    completion(.failure(error))
+                    let serverError = ErrorHandler.ServerError(error.localizedDescription)
+                    completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                 }
             }
         }

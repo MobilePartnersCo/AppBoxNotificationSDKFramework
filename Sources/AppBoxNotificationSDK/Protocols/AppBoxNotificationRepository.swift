@@ -62,7 +62,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
                         }
                     case .failure(let error):
-                        completion?(nil, error as NSError)
+                        let serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
                     }
                 }
             }

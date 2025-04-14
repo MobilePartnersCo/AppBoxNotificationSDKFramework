@@ -5,7 +5,7 @@
 //  Created by mobilePartners on 3/26/25.
 //
 
-import Firebase
+@_implementationOnly import Firebase
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class FcmUtil {

@@ -13,6 +13,8 @@ import UserNotifications
  `AppBoxNotificationSDK`에서 사용되는 프로토콜로, SDK 초기화 및 다양한 설정을 제공합니다.
  */
 @objc public protocol AppBoxNotificationProtocol {
+    var delegate: AppBoxNotificationDelegate? { get set }
+    
     /**
      # initSDK
      

@@ -10,8 +10,8 @@ import Firebase
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
-    
     static let shared = AppBoxNotificationRepository()
+    public weak var delegate: AppBoxNotificationDelegate?
     var messaging: Messaging? = nil
     
     func initSDK(projectId: String?) {
@@ -87,6 +87,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 case .failure(let error):
                     completion?(nil, error as NSError)
                 }
+                self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
             }
         }
     }
@@ -104,6 +105,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 case .failure(let error):
                     completion?(nil, error as NSError)
                 }
+                self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
             }
         }
     }

@@ -13,6 +13,33 @@ import UserNotifications
  `AppBoxNotificationSDK`에서 사용되는 프로토콜로, SDK 초기화 및 다양한 설정을 제공합니다.
  */
 @objc public protocol AppBoxNotificationProtocol {
+    /**
+     # delegate
+     
+     AppBoxNotificationSDK에서 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate입니다.
+     푸시 토큰이 성공적으로 발급되고 저장된 후 `appBoxPushTokenDidUpdate(_:)` 메서드가 호출됩니다.
+
+     ## Author
+     - ss.moon
+     
+     ## Warning
+     - `initSDK` 호출 전에 delegate를 설정해야 이벤트를 정상적으로 받을 수 있습니다.
+     
+     ## Example
+     ```swift
+     AppBoxNotification.shared.delegate = self
+     
+     extension ViewController: AppBoxNotificationDelegate {
+         func appBoxPushTokenDidUpdate(_ token: String?) {
+             if let token = token {
+                 print("appBoxPushTokenDidUpdate :: \(token)")
+             } else {
+                 print("appBoxPushTokenDidUpdate :: nil")
+             }
+         }
+     }
+     ```
+     */
     var delegate: AppBoxNotificationDelegate? { get set }
     
     /**

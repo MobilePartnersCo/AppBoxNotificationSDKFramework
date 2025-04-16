@@ -22,11 +22,11 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNs: true, completion: nil)
     }
     
-    func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+    func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
         initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: completion)
     }
     
-    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
         let pId = projectId ?? ""
@@ -40,11 +40,14 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             
             if autoRegisterForAPNs {
                 self.requestPushAuthorization { granted in
-                    debugLog("Push granted:: \(granted)")
+                    let permission: NSNumber? = NSNumber(value: granted)
+                    completion?(model, nil, permission)
                 }
                 UIApplication.shared.registerForRemoteNotifications()
+            } else {
+                completion?(model, nil, nil)
             }
-            completion?(model, nil)
+            
         } else {
             ConfigData.shared.isFcmInit = false
             AppBoxCoreFramework.shared.coreGetPushInfo() { (result: Result<AppPushInfoApiModel, Error>) in
@@ -67,21 +70,24 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             if autoRegisterForAPNs {
                                 self.requestPushAuthorization { granted in
-                                    debugLog("Push granted:: \(granted)")
+                                    let permission: NSNumber? = NSNumber(value: granted)
+                                    completion?(model, nil, permission)
                                 }
                                 UIApplication.shared.registerForRemoteNotifications()
+                            } else {
+                                completion?(model, nil, nil)
                             }
-                            completion?(model, nil)
+                            
                             
                         } else {
                             let serverError = ErrorHandler.ServerError(model.message)
                             debugLog("Error :: \(serverError.errorMessgae)")
-                            completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
+                            completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
                         }
                     case .failure(let error):
                         let serverError = ErrorHandler.ServerError(error.localizedDescription)
                         debugLog("Error :: \(serverError.errorMessgae)")
-                        completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
+                        completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
                     }
                 }
             }
@@ -161,9 +167,11 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 switch settings.authorizationStatus {
                 case .authorized, .provisional:
                     //허용
+                    debugLog("user permission authorized")
                     completion(true)
                 case .denied:
                     //거부
+                    debugLog("user permission denied")
                     completion(false)
                 case .notDetermined:
                     // 권한 요청 안함
@@ -181,6 +189,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     completion(true)
                 @unknown default:
                     //알 수없는 상태
+                    debugLog("unkown error")
                     completion(false)
                 }
             }

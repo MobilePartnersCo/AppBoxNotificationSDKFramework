@@ -57,6 +57,10 @@ import UserNotifications
      - `autoRegisterForAPNs`: APNS 등록 실행 여부 (옵션)
         - default: true
      - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
+        - `granted`: 푸시 권한 요청 결과입니다. `autoRegisterForAPNs`가 `true`인 경우에만 전달됩니다.
+            - true: 권한이 허용됨
+            - false: 권한이 거부됨
+            - nil: 권한 요청이 수행되지 않았거나 autoRegisterForAPNs가 false인 경우
 
      ## Author
      - ss.moon
@@ -66,7 +70,7 @@ import UserNotifications
      
      ## Example
      ```swift
-     AppBoxNotification.shared.initSDK(projectId: "AYX-371110", debugMode: true, autoRegisterForAPNs: false) { result, error in
+     AppBoxNotification.shared.initSDK(projectId: "YOUR PROJECT ID", debugMode: true, autoRegisterForAPNs: false) { result, error, granted in
           if let error = error {
               print("초기화 실패: \(error.localizedDescription)")
           } else {
@@ -76,8 +80,8 @@ import UserNotifications
      }
      ```
      */
-    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
-    func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
+    func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, debugMode: Bool)
     func initSDK(projectId: String?)
     

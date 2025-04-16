@@ -15,22 +15,22 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     let center = UNUserNotificationCenter.current()
     
     func initSDK(projectId: String?) {
-        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: nil)
+        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNS: true, completion: nil)
     }
     
     func initSDK(projectId: String?, debugMode: Bool) {
-        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNs: true, completion: nil)
+        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNS: true, completion: nil)
     }
     
     func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
-        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: completion)
+        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNS: true, completion: completion)
     }
     
     func initSDK(projectId: String?, debugMode: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
-        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNs: true, completion: completion)
+        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNS: true, completion: completion)
     }
     
-    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNS: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
         let pId = projectId ?? ""
@@ -42,7 +42,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             let model = AppBoxNotiResultModel(token: "", message: initMessage)
             debugLog("Success :: \(initMessage)")
             
-            if autoRegisterForAPNs {
+            if autoRegisterForAPNS {
                 self.requestPushAuthorization { granted in
                     let permission: NSNumber? = NSNumber(value: granted)
                     completion?(model, nil, permission)
@@ -72,7 +72,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             let model = AppBoxNotiResultModel(token: "", message: initMessage)
                             debugLog("Success :: \(initMessage)")
                             
-                            if autoRegisterForAPNs {
+                            if autoRegisterForAPNS {
                                 self.requestPushAuthorization { granted in
                                     let permission: NSNumber? = NSNumber(value: granted)
                                     completion?(model, nil, permission)

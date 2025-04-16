@@ -39,6 +39,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             debugLog("Success :: \(initMessage)")
             
             if autoRegisterForAPNs {
+                requestPushAuthorization { granted in
+                    debugLog("Push granted:: \(granted)")
+                }
                 UIApplication.shared.registerForRemoteNotifications()
             }
             completion?(model, nil)
@@ -63,6 +66,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             debugLog("Success :: \(initMessage)")
                             
                             if autoRegisterForAPNs {
+                                requestPushAuthorization { granted in
+                                    debugLog("Push granted:: \(granted)")
+                                }
                                 UIApplication.shared.registerForRemoteNotifications()
                             }
                             completion?(model, nil)

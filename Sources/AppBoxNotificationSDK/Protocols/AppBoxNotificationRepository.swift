@@ -184,6 +184,12 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             if let error = error {
                                 debugLog("Error requesting notification authorization: \(error.localizedDescription)")
                             }
+                            
+                            if granted {
+                                debugLog("user permission authorized")
+                            } else {
+                                debugLog("user permission denied")
+                            }
 
                             completion(granted)
                         }

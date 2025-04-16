@@ -47,7 +47,7 @@ import UserNotifications
      
      AppBoxNotificationSDK를 초기화합니다.
      `autoRegisterForAPNs`는 기본값이 `true`입니다.
-     특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNs 등록 및 푸시 권한이 수행됩니다.
+     특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.
      기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNs: false`로 설정해 주세요.
      
      ## Parameters
@@ -186,7 +186,7 @@ import UserNotifications
     /**
      # requestPushAuthorization
      
-     푸시 권한 알림 권한을 요청합니다.
+     푸시 알림 권한을 요청합니다.
      시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.
      이미 권한이 허용된 경우에는 별도의 요청 없이 바로 `true`를 반환하며,
      거부되었거나 요청할 수 없는 상태인 경우 `false`를 반환합니다.

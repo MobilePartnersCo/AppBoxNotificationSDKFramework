@@ -26,6 +26,10 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: completion)
     }
     
+    func initSDK(projectId: String?, debugMode: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
+        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNs: true, completion: completion)
+    }
+    
     func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         

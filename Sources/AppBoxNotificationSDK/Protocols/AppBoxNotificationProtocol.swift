@@ -70,17 +70,25 @@ import UserNotifications
      
      ## Example
      ```swift
-     AppBoxNotification.shared.initSDK(projectId: "YOUR PROJECT ID", debugMode: true, autoRegisterForAPNs: false) { result, error, granted in
+     AppBoxNotification.shared.initSDK(projectId: "YOUR PROJECT ID", debugMode: true) { result, error, granted in
           if let error = error {
               print("초기화 실패: \(error.localizedDescription)")
           } else {
               print("초기화 성공: \(result.message)")
           }
-          UIApplication.shared.registerForRemoteNotifications()
+     
+          if let granted = granted {
+             if let granted = granted {
+                 if !granted.boolValue {
+                     print("권한 미허용")
+                 }
+             }
+          }
      }
      ```
      */
     func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
+    func initSDK(projectId: String?, debugMode: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, debugMode: Bool)
     func initSDK(projectId: String?)

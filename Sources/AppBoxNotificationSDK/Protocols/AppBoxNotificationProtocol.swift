@@ -45,75 +45,6 @@ import UserNotifications
     /**
      # initSDK
      
-     AppBoxNotificationSDK를 초기화합니다. 초기화 시 projectId를 설정합니다.
-     
-     ## Parameters
-     - `projectId`: projectID
-
-     ## Author
-     - ss.moon
-    
-     ## Warning
-     - Firebase가 이미 구성된 경우 Firebase init 이후 SDK를 초기화 해야합니다.
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.initSDK(projectId: "projectId")
-     ```
-     */
-    func initSDK(projectId: String?)
-    /**
-     # initSDK
-     
-     AppBoxNotificationSDK를 초기화합니다. 초기화 시 projectId를 설정합니다.
-     
-     ## Parameters
-     - `projectId`: projectID
-     - `debugMode`: 디버그 모드 활성화 여부 (옵션)
-        - default: false
-
-     ## Author
-     - ss.moon
-    
-     ## Warning
-     - Firebase가 이미 구성된 경우 Firebase init 이후 SDK를 초기화 해야합니다.
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.initSDK(projectId: "projectId", debugMode: true)
-     ```
-     */
-    func initSDK(projectId: String?, debugMode: Bool)
-    /**
-     # initSDK
-     
-     AppBoxNotificationSDK를 초기화합니다. 초기화 시 projectId와 completion을 설정합니다.
-     
-     ## Parameters
-     - `projectId`: projectID
-     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
-
-     ## Author
-     - ss.moon
-     
-     ## Warning
-     - Firebase가 이미 구성된 경우 Firebase init 이후 SDK를 초기화 해야합니다.
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.initSDK(projectId: "AYX-371110") { result, error in
-          if let error = error {
-              print("초기화 실패: \(error.localizedDescription)")
-          } else {
-              print("초기화 성공: \(result.message)")
-          }
-     }
-     ```
-     */
-    func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
-    /**
-     # initSDK
-     
      AppBoxNotificationSDK를 초기화합니다. 초기화 시 projectId와 completion을 설정합니다.
      
      ## Parameters
@@ -140,26 +71,11 @@ import UserNotifications
      ```
      */
     func initSDK(projectId: String?, debugMode: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
-    /**
-     # application
-     
-     Apns 등록 시점에 FCM 토큰을 저장합니다.
-     
-     ## Parameters
-     - `didRegisterForRemoteNotificationsWithDeviceToken`:  Apns deviceToken
-
-     ## Author
-     - ss.moon
+    func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func initSDK(projectId: String?, debugMode: Bool)
+    func initSDK(projectId: String?)
     
-     ## Warning
-     - Apns 등록 시점에 맞춰서 해당 함수를 등록해야 FCM 토큰이 정상적으로 저장됩니다.
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.application(didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-     ```
-     */
-    func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    
     /**
      # application
      
@@ -188,25 +104,8 @@ import UserNotifications
      ```
      */
     func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
-    /**
-     # savePushToken
-     
-     푸시 알림에 대한 사용 여부와 토큰을 저장합니다.
-     
-     ## Parameters
-     - `token`:  FCM Token
-     - `pushYn`:  푸시알림 사용 여부
-        - value: true:  사용, false: 미사용
-
-     ## Author
-     - ss.moon
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.savePushToken(token: "FCM Token", pushYn: true)
-     ```
-     */
-    func savePushToken(token: String, pushYn: Bool)
+    func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    
     /**
      # savePushToken
      
@@ -234,6 +133,8 @@ import UserNotifications
      ```
      */
     func savePushToken(token: String, pushYn: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func savePushToken(token: String, pushYn: Bool)
+   
     /**
      # getPushToken
      
@@ -275,4 +176,33 @@ import UserNotifications
      ```
      */
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel?
+    
+    /**
+     # requestPushAuthorization
+     
+     푸시 권한 알림 권한을 요청합니다.
+     시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.
+     이미 권한이 허용된 경우에는 별도의 요청 없이 바로 `true`를 반환하며,
+     거부되었거나 요청할 수 없는 상태인 경우 `false`를 반환합니다.
+     
+     ## Parameters
+     - `completion`:  푸시 권한 요청 결과를 비동기적으로 전달받는 콜백.
+        - `true`: 권한 허용됨
+        - `false`: 권한 거부됨 또는 알 수 없음
+     
+     ## Author
+     - ss.moon
+     
+     ## Example
+     ```swift
+     AppBoxNotification.shared.requestPushAuthorization { granted in
+         if granted {
+             UIApplication.shared.registerForRemoteNotifications()
+         } else {
+             print("알림 권한이 거부되었습니다.")
+         }
+     }
+     ```
+     */
+    func requestPushAuthorization(completion: @escaping (Bool) -> Void)
 }

@@ -12,7 +12,7 @@ import Firebase
 class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     static let shared = AppBoxNotificationRepository()
     public weak var delegate: AppBoxNotificationDelegate?
-    var messaging: Messaging? = nil
+    let center = UNUserNotificationCenter.current()
     
     func initSDK(projectId: String?) {
         initSDK(projectId: projectId, debugMode: false, completion: nil)
@@ -137,5 +137,39 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             return model
         }
         return nil
+    }
+    
+    func requestPushAuthorization(completion: @escaping (Bool) -> Void) {
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        
+        center.getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .authorized, .provisional:
+                    //허용
+                    completion(true)
+                case .denied:
+                    //거부
+                    completion(false)
+                case .notDetermined:
+                    // 권한 요청 안함
+                    self.center.requestAuthorization(options: options) { granted, error in
+                        DispatchQueue.main.async {
+                            if let error = error {
+                                debugLog("Error requesting notification authorization: \(error.localizedDescription)")
+                            }
+
+                            completion(granted)
+                        }
+                    }
+                case .ephemeral:
+                    debugLog("Ephemeral state detected - push will work, but session is temporary.")
+                    completion(true)
+                @unknown default:
+                    //알 수없는 상태
+                    completion(false)
+                }
+            }
+        }
     }
 }

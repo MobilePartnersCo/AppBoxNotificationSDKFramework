@@ -39,6 +39,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
+            ConfigData.shared.initalize = true
             let model = AppBoxNotiResultModel(token: "", message: initMessage)
             debugLog("Success :: \(initMessage)")
             
@@ -59,6 +60,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     switch result {
                     case .success(let model):
                         if model.success {
+                            ConfigData.shared.initalize = true
+                            
                             let options = FirebaseOptions(
                                 googleAppID: model.firebase_info.app_id,
                                 gcmSenderID: model.firebase_info.sender_id
@@ -84,11 +87,13 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             
                         } else {
+                            ConfigData.shared.initalize = false
                             let serverError = ErrorHandler.ServerError(model.message)
                             debugLog("Error :: \(serverError.errorMessgae)")
                             completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
                         }
                     case .failure(let error):
+                        ConfigData.shared.initalize = false
                         let serverError = ErrorHandler.ServerError(error.localizedDescription)
                         debugLog("Error :: \(serverError.errorMessgae)")
                         completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
@@ -103,6 +108,13 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+        if !ConfigData.shared.initalize {
+            let initError = ErrorHandler.validInit
+            debugLog("Error :: \(initError.errorMessgae)")
+            completion?(nil, NSError(domain: "", code: initError.errorCode, userInfo: [NSLocalizedDescriptionKey: initError.errorMessgae]))
+            return
+        }
+        
         if !ConfigData.shared.isFcmInit {
             Messaging.messaging().apnsToken = deviceToken
         }
@@ -125,6 +137,13 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func savePushToken(token: String, pushYn: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+        if !ConfigData.shared.initalize {
+            let initError = ErrorHandler.validInit
+            debugLog("Error :: \(initError.errorMessgae)")
+            completion?(nil, NSError(domain: "", code: initError.errorCode, userInfo: [NSLocalizedDescriptionKey: initError.errorMessgae]))
+            return
+        }
+        
         FcmUtil.setToken(pushToken: token, pushYn: pushYn) { (result: Result<AppBoxNotiResultModel, Error>) in
             DispatchQueue.main.async {
                 switch result {
@@ -143,6 +162,12 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel? {
+        if !ConfigData.shared.initalize {
+            let initError = ErrorHandler.validInit
+            debugLog("Error :: \(initError.errorMessgae)")
+            return nil
+        }
+        
         if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {
             let model = AppBoxNotiModel(params: content.param)
             

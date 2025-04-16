@@ -9,5 +9,6 @@ final class ConfigData {
     static let shared = ConfigData()
     private init() {}
     
+    var initalize: Bool = false
     var isFcmInit: Bool = false
 }

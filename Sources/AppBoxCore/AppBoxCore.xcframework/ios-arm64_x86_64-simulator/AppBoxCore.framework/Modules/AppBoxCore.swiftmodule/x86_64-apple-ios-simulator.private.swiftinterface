@@ -30,6 +30,7 @@ import _SwiftConcurrencyShims
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId
+  @_spi(AppBoxNotification_Internal) case validInit
   @_spi(AppBoxNotification_Internal) case validIdx
   @_spi(AppBoxNotification_Internal) case validEncrypt
   @_spi(AppBoxNotification_Internal) case validUrl

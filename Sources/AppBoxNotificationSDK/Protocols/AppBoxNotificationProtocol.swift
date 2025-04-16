@@ -45,12 +45,17 @@ import UserNotifications
     /**
      # initSDK
      
-     AppBoxNotificationSDK를 초기화합니다. 초기화 시 projectId와 completion을 설정합니다.
+     AppBoxNotificationSDK를 초기화합니다.
+     `autoRegisterForAPNs`는 기본값이 `true`입니다.
+     특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNs 등록이 수행됩니다.
+     기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNs: false`로 설정해 주세요.
      
      ## Parameters
      - `projectId`: projectID
      - `debugMode`: 디버그 모드 활성화 여부 (옵션)
         - default: false
+     - `autoRegisterForAPNs`: APNS 등록 실행 여부 (옵션)
+        - default: true
      - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
 
      ## Author
@@ -61,16 +66,17 @@ import UserNotifications
      
      ## Example
      ```swift
-     AppBoxNotification.shared.initSDK(projectId: "AYX-371110", debugMode: true) { result, error in
+     AppBoxNotification.shared.initSDK(projectId: "AYX-371110", debugMode: true, autoRegisterForAPNs: false) { result, error in
           if let error = error {
               print("초기화 실패: \(error.localizedDescription)")
           } else {
               print("초기화 성공: \(result.message)")
           }
+          UIApplication.shared.registerForRemoteNotifications()
      }
      ```
      */
-    func initSDK(projectId: String?, debugMode: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
     func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
     func initSDK(projectId: String?, debugMode: Bool)
     func initSDK(projectId: String?)

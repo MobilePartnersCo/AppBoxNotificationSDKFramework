@@ -15,18 +15,18 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     let center = UNUserNotificationCenter.current()
     
     func initSDK(projectId: String?) {
-        initSDK(projectId: projectId, debugMode: false, completion: nil)
+        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: nil)
     }
     
     func initSDK(projectId: String?, debugMode: Bool) {
-        initSDK(projectId: projectId, debugMode: debugMode, completion: nil)
+        initSDK(projectId: projectId, debugMode: debugMode, autoRegisterForAPNs: true, completion: nil)
     }
     
     func initSDK(projectId: String?, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
-        initSDK(projectId: projectId, debugMode: false, completion: completion)
+        initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNs: true, completion: completion)
     }
     
-    func initSDK(projectId: String?, debugMode: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
         let pId = projectId ?? ""
@@ -38,7 +38,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             let model = AppBoxNotiResultModel(token: "", message: initMessage)
             debugLog("Success :: \(initMessage)")
             
-            UIApplication.shared.registerForRemoteNotifications()
+            if autoRegisterForAPNs {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
             completion?(model, nil)
         } else {
             ConfigData.shared.isFcmInit = false
@@ -60,7 +62,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             let model = AppBoxNotiResultModel(token: "", message: initMessage)
                             debugLog("Success :: \(initMessage)")
                             
-                            UIApplication.shared.registerForRemoteNotifications()
+                            if autoRegisterForAPNs {
+                                UIApplication.shared.registerForRemoteNotifications()
+                            }
                             completion?(model, nil)
                             
                         } else {

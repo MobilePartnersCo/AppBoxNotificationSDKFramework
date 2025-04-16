@@ -35,7 +35,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
-            let model = AppBoxNotiResultModel(token: "", message: "이미 Firebase가 초기화 되어있습니다.")
+            let model = AppBoxNotiResultModel(token: "", message: initMessage)
+            debugLog("Success :: \(initMessage)")
             completion?(model, nil)
         } else {
             ConfigData.shared.isFcmInit = false
@@ -54,15 +55,18 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             FirebaseApp.configure(options: options)
                             
-                            let model = AppBoxNotiResultModel(token: "", message: "Firebase 초기화 성공")
+                            let model = AppBoxNotiResultModel(token: "", message: initMessage)
+                            debugLog("Success :: \(initMessage)")
                             completion?(model, nil)
                             
                         } else {
                             let serverError = ErrorHandler.ServerError(model.message)
+                            debugLog("Error :: \(serverError.errorMessgae)")
                             completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
                         }
                     case .failure(let error):
                         let serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        debugLog("Error :: \(serverError.errorMessgae)")
                         completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
                     }
                 }
@@ -122,10 +126,12 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 switch result {
                 case .success(let model):
                     if !model.success {
-                        debugLog(model.message)
+                        let serverError = ErrorHandler.ServerError(model.message)
+                        debugLog("Error :: \(serverError.errorMessgae)")
                     }
                 case .failure(let error):
-                    debugLog(error.localizedDescription)
+                    let serverError = ErrorHandler.ServerError(error.localizedDescription)
+                    debugLog("Error :: \(serverError.errorMessgae)")
                 }
             }
             return model

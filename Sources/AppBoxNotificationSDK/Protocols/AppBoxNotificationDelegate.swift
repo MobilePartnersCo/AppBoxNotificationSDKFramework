@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// AppBoxNotificationDelegateClass
 @objc public protocol AppBoxNotificationDelegate: AnyObject {
+    /// 푸시토큰 전달하는 메서드
     @objc optional func appBoxPushTokenDidUpdate(_ token: String?)
 }

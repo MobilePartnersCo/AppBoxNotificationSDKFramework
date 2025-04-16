@@ -2750,21 +2750,14 @@
     {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/UserDefaultManager.swift",
       "kind": "StringLiteral",
-      "offset": 292,
-      "length": 29,
-      "value": "\"appBoxNotification_pushInfo\""
-    },
-    {
-      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/UserDefaultManager.swift",
-      "kind": "StringLiteral",
-      "offset": 341,
+      "offset": 291,
       "length": 28,
       "value": "\"appBoxNotification_pushDui\""
     },
     {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/UserDefaultManager.swift",
       "kind": "StringLiteral",
-      "offset": 391,
+      "offset": 341,
       "length": 30,
       "value": "\"appBoxNotification_pushtoken\""
     },

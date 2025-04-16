@@ -46,21 +46,21 @@ import UserNotifications
      # initSDK
      
      AppBoxNotificationSDK를 초기화합니다.
-     `autoRegisterForAPNs`는 기본값이 `true`입니다.
+     `autoRegisterForAPNS`는 기본값이 `true`입니다.
      특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.
-     기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNs: false`로 설정해 주세요.
+     기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.
      
      ## Parameters
      - `projectId`: projectID
      - `debugMode`: 디버그 모드 활성화 여부 (옵션)
         - default: false
-     - `autoRegisterForAPNs`: APNS 등록 실행 여부 (옵션)
+     - `autoRegisterForAPNS`: APNS 등록 실행 여부 (옵션)
         - default: true
      - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
-        - `granted`: 푸시 권한 요청 결과입니다. `autoRegisterForAPNs`가 `true`인 경우에만 전달됩니다.
+        - `granted`: 푸시 권한 요청 결과입니다. `autoRegisterForAPNS`가 `true`인 경우에만 전달됩니다.
             - true: 권한이 허용됨
             - false: 권한이 거부됨
-            - nil: 권한 요청이 수행되지 않았거나 autoRegisterForAPNs가 false인 경우
+            - nil: 권한 요청이 수행되지 않았거나 autoRegisterForAPNS가 false인 경우
 
      ## Author
      - ss.moon
@@ -87,7 +87,7 @@ import UserNotifications
      }
      ```
      */
-    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNs: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
+    func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNS: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, debugMode: Bool, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?, _ pushPermissionGranted: NSNumber?) -> Void)?)
     func initSDK(projectId: String?, debugMode: Bool)

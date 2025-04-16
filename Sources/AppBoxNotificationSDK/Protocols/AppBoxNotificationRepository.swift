@@ -37,6 +37,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             ConfigData.shared.isFcmInit = true
             let model = AppBoxNotiResultModel(token: "", message: initMessage)
             debugLog("Success :: \(initMessage)")
+            
+            UIApplication.shared.registerForRemoteNotifications()
             completion?(model, nil)
         } else {
             ConfigData.shared.isFcmInit = false
@@ -57,6 +59,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             let model = AppBoxNotiResultModel(token: "", message: initMessage)
                             debugLog("Success :: \(initMessage)")
+                            
+                            UIApplication.shared.registerForRemoteNotifications()
                             completion?(model, nil)
                             
                         } else {

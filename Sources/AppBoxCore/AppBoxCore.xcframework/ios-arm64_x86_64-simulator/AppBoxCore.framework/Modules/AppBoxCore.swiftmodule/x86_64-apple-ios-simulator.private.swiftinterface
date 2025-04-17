@@ -40,6 +40,9 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public var errorCode: Swift.Int {
     @_spi(AppBoxNotification_Internal) get
   }
+  @_spi(AppBoxNotification_Internal) public static var allErrorCodes: [Swift.Int] {
+    @_spi(AppBoxNotification_Internal) get
+  }
   @_spi(AppBoxNotification_Internal) public var errorMessgae: Swift.String {
     @_spi(AppBoxNotification_Internal) get
   }

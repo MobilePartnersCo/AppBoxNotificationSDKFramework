@@ -1147,6 +1147,70 @@
           },
           {
             "kind": "Var",
+            "name": "allErrorCodes",
+            "printedName": "allErrorCodes",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Swift.Int]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore12ErrorHandlerO03allD5CodesSaySiGvpZ",
+            "mangledName": "$s10AppBoxCore12ErrorHandlerO03allD5CodesSaySiGvpZ",
+            "moduleName": "AppBoxCore",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[Swift.Int]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore12ErrorHandlerO03allD5CodesSaySiGvgZ",
+                "mangledName": "$s10AppBoxCore12ErrorHandlerO03allD5CodesSaySiGvgZ",
+                "moduleName": "AppBoxCore",
+                "static": true,
+                "spi_group_names": [
+                  "AppBoxNotification_Internal"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "errorMessgae",
             "printedName": "errorMessgae",
             "children": [

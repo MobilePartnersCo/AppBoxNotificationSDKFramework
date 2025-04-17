@@ -38,9 +38,15 @@ class FcmUtil {
                         completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                     }
                 case .failure(let error):
-                    let serverError = ErrorHandler.ServerError(error.localizedDescription)
-                    debugLog("Error :: \(serverError.errorMessgae)")
-                    completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
+                    var serverError = ErrorHandler.ServerError(error.localizedDescription)
+                    let nsError = error as NSError
+                    if ErrorHandler.allErrorCodes.contains(nsError.code) {
+                        debugLog("Error :: \(nsError.localizedDescription)")
+                        completion(.failure(nsError))
+                    } else {
+                        debugLog("Error :: \(serverError.errorMessgae)")
+                        completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
+                    }
                 }
             }
         }

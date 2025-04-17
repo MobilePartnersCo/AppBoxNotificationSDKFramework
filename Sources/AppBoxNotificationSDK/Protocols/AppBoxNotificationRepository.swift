@@ -94,9 +94,16 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                         }
                     case .failure(let error):
                         ConfigData.shared.initalize = false
-                        let serverError = ErrorHandler.ServerError(error.localizedDescription)
-                        debugLog("Error :: \(serverError.errorMessgae)")
-                        completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
+                        
+                        var serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        let nsError = error as NSError
+                        if ErrorHandler.allErrorCodes.contains(nsError.code) {
+                            debugLog("Error :: \(nsError.localizedDescription)")
+                            completion?(nil, nsError, nil)
+                        } else {
+                            debugLog("Error :: \(serverError.errorMessgae)")
+                            completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
+                        }
                     }
                 }
             }

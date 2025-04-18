@@ -12,8 +12,8 @@
 
 ## 라이선스
 
-- 앱박스 푸시알림 SDK는 기업 및 개인이 상업적 목적으로 사용할 수 있습니다.
-본 SDK의 사용 및 일부 기능은 앱박수 푸시 콘솔을 통한 구독 등급에 따라 제한되거나 유료로 제공될 수 있습니다.
+- 앱박스 푸시알림 SDK는 기업 및 개인이 상업적 목적으로 사용할 수 있습니다.<br>
+본 SDK의 사용 및 일부 기능은 앱박수 푸시 콘솔을 통한 구독 등급에 따라 제한되거나 유료로 제공될 수 있습니다.<br>
 자세한 라이선스 및 이용 조건은 [공식문서](https://appboxapp.com/policy/terms/push)를 확인해 주세요.
 
 ---
@@ -84,10 +84,10 @@ SDK를 사용하려면 `Info.plist` 파일에 아래와 같은 항목을 추가�
 
 ### 1. SDK 초기 설정
 
-AppBoxNotificationSDK를 초기화합니다.
-`autoRegisterForAPNS`는 기본값이 `true`입니다.
-특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.
-기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.
+AppBoxNotificationSDK를 초기화합니다.<br>
+`autoRegisterForAPNS`는 기본값이 `true`입니다.<br>
+특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.<br>
+기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.<br><br>
 
 `AppDelegate`에서 초기설정을 진행합니다.
 
@@ -252,7 +252,7 @@ AppBoxNotification.shared.savePushToken(token: pushToken, pushYn: true) { result
 
 - #### **푸시토큰 갱신 이벤트 설정**
 
-AppBoxNotificationSDK에서 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate입니다.
+AppBoxNotificationSDK에서 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate입니다.<br>
 푸시 토큰이 성공적으로 발급되고 저장된 후 `appBoxPushTokenDidUpdate(_:)` 메서드가 호출됩니다.
 
 #### 예제 코드:
@@ -274,9 +274,9 @@ extension ViewController: AppBoxNotificationDelegate {
 
 - #### **푸시 권한 요청**
 
-푸시 알림 권한을 요청합니다.
-시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.
-이미 권한이 허용된 경우에는 별도의 요청 없이 바로 `true`를 반환하며,
+푸시 알림 권한을 요청합니다.<br>
+시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.<br>
+이미 권한이 허용된 경우에는 별도의 요청 없이 바로 `true`를 반환하며,<br>
 거부되었거나 요청할 수 없는 상태인 경우 `false`를 반환합니다.
 
 #### 예제 코드:

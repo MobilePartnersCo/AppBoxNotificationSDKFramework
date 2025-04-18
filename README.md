@@ -270,6 +270,7 @@ extension ViewController: AppBoxNotificationDelegate {
        }
    }
 }
+```
 
 - #### **푸시 권한 요청**
 
@@ -290,7 +291,6 @@ AppBoxNotification.shared.requestPushAuthorization { granted in
    }
 }
 ```
-
 ---
 
 ## 요구 사항

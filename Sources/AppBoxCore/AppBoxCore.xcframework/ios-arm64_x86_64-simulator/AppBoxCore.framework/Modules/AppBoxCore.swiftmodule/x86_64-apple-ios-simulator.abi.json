@@ -808,6 +808,46 @@
           },
           {
             "kind": "Var",
+            "name": "preventDuplicate",
+            "printedName": "preventDuplicate",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(AppBoxCore.ErrorHandler.Type) -> AppBoxCore.ErrorHandler",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ErrorHandler",
+                    "printedName": "AppBoxCore.ErrorHandler",
+                    "usr": "s:10AppBoxCore12ErrorHandlerO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "AppBoxCore.ErrorHandler.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ErrorHandler",
+                        "printedName": "AppBoxCore.ErrorHandler",
+                        "usr": "s:10AppBoxCore12ErrorHandlerO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10AppBoxCore12ErrorHandlerO16preventDuplicateyA2CmF",
+            "mangledName": "$s10AppBoxCore12ErrorHandlerO16preventDuplicateyA2CmF",
+            "moduleName": "AppBoxCore",
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "validInit",
             "printedName": "validInit",
             "children": [
@@ -841,6 +881,46 @@
             "declKind": "EnumElement",
             "usr": "s:10AppBoxCore12ErrorHandlerO9validInityA2CmF",
             "mangledName": "$s10AppBoxCore12ErrorHandlerO9validInityA2CmF",
+            "moduleName": "AppBoxCore",
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "alreadyExcute",
+            "printedName": "alreadyExcute",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(AppBoxCore.ErrorHandler.Type) -> AppBoxCore.ErrorHandler",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ErrorHandler",
+                    "printedName": "AppBoxCore.ErrorHandler",
+                    "usr": "s:10AppBoxCore12ErrorHandlerO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "AppBoxCore.ErrorHandler.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ErrorHandler",
+                        "printedName": "AppBoxCore.ErrorHandler",
+                        "usr": "s:10AppBoxCore12ErrorHandlerO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10AppBoxCore12ErrorHandlerO13alreadyExcuteyA2CmF",
+            "mangledName": "$s10AppBoxCore12ErrorHandlerO13alreadyExcuteyA2CmF",
             "moduleName": "AppBoxCore",
             "spi_group_names": [
               "AppBoxNotification_Internal"
@@ -1417,7 +1497,7 @@
       {
         "kind": "Function",
         "name": "debugLog",
-        "printedName": "debugLog(_:functionName:fileName:lineNumber:)",
+        "printedName": "debugLog(_:functionName:fileName:lineNumber:isWarning:)",
         "children": [
           {
             "kind": "TypeNominal",
@@ -1450,11 +1530,18 @@
             "printedName": "Swift.Int",
             "hasDefaultArg": true,
             "usr": "s:Si"
+          },
+          {
+            "kind": "TypeNominal",
+            "name": "Bool",
+            "printedName": "Swift.Bool",
+            "hasDefaultArg": true,
+            "usr": "s:Sb"
           }
         ],
         "declKind": "Func",
-        "usr": "s:10AppBoxCore8debugLog_12functionName04fileG010lineNumberySS_S2SSitF",
-        "mangledName": "$s10AppBoxCore8debugLog_12functionName04fileG010lineNumberySS_S2SSitF",
+        "usr": "s:10AppBoxCore8debugLog_12functionName04fileG010lineNumber9isWarningySS_S2SSiSbtF",
+        "mangledName": "$s10AppBoxCore8debugLog_12functionName04fileG010lineNumber9isWarningySS_S2SSiSbtF",
         "moduleName": "AppBoxCore",
         "declAttributes": [
           "AccessControl",
@@ -2811,8 +2898,15 @@
   "ConstValues": [
     {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/utils\/Util.swift",
+      "kind": "BooleanLiteral",
+      "offset": 374,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/utils\/Util.swift",
       "kind": "IntegerLiteral",
-      "offset": 1753,
+      "offset": 1884,
       "length": 2,
       "value": "12"
     },

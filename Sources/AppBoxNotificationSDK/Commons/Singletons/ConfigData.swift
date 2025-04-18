@@ -11,4 +11,6 @@ final class ConfigData {
     
     var initalize: Bool = false
     var isFcmInit: Bool = false
+    var isDuplicateInit: Bool = false
+    var isDuplicateSave: Bool = false
 }

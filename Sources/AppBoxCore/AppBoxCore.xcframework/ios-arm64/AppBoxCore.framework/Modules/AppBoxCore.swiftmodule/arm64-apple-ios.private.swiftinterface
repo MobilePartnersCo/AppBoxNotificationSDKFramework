@@ -30,7 +30,9 @@ import _SwiftConcurrencyShims
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId
+  @_spi(AppBoxNotification_Internal) case preventDuplicate
   @_spi(AppBoxNotification_Internal) case validInit
+  @_spi(AppBoxNotification_Internal) case alreadyExcute
   @_spi(AppBoxNotification_Internal) case validIdx
   @_spi(AppBoxNotification_Internal) case validEncrypt
   @_spi(AppBoxNotification_Internal) case validUrl
@@ -51,7 +53,7 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public static let shared: any AppBoxCore.AppBoxCoreProtocol
   @_spi(AppBoxNotification_Internal) @objc deinit
 }
-@_spi(AppBoxNotification_Internal) public func debugLog(_ message: Swift.String, functionName: Swift.String = #function, fileName: Swift.String = #file, lineNumber: Swift.Int = #line)
+@_spi(AppBoxNotification_Internal) public func debugLog(_ message: Swift.String, functionName: Swift.String = #function, fileName: Swift.String = #file, lineNumber: Swift.Int = #line, isWarning: Swift.Bool = false)
 @_spi(AppBoxNotification_Internal) public class AppPushTokenApiModel : Swift.Codable {
   @_spi(AppBoxNotification_Internal) final public let success: Swift.Bool
   @_spi(AppBoxNotification_Internal) final public let message: Swift.String

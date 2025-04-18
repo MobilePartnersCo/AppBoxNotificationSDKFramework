@@ -4,27 +4,29 @@
 [![Swift Package Manager](https://img.shields.io/badge/SPM-Compatible-green.svg)](https://swift.org/package-manager/)
 [![Version](https://img.shields.io/github/v/tag/MobilePartnersCo/AppBoxNotificationSDKFramework?label=version)](https://github.com/MobilePartnersCo/AppBoxNotificationSampleiOS)
 
-- AppBoxNotification SDK는 푸시를 간편하게 연동하는 솔루션입니다. 
-
+- AppBoxNotification SDK는 푸시를 간편하게 연동하는 솔루션입니다.
+- AppBoxNotification SDK는 앱박스 홈페이지의 [푸시 전용 콘솔](https://appboxapp.com/console/launchpad)을 활용하여 푸시알림 서비스를 사용할 수 있습니다.
+- 푸시 전용 콘솔을 이용하여 테스트 발송, 예약 발송 등 다양한 푸시 기능을 사용하실 수 있습니다.
+  
 ---
 
 ## 라이선스
 
-- 앱박스의 SDK의 사용은 영구적으로 무료입니다. 기업 또는 개인 상업적인 목적으로 사용 할 수 있습니다.
+- 앱박스 푸시알림 SDK는 기업 및 개인이 상업적 목적으로 사용할 수 있습니다.
+본 SDK의 사용 및 일부 기능은 앱박수 푸시 콘솔을 통한 구독 등급에 따라 제한되거나 유료로 제공될 수 있습니다.
+자세한 라이선스 및 이용 조건은 [공식문서](https://appboxapp.com/policy/terms/push)를 확인해 주세요.
 
 ---
 
-## 개발자 메뉴얼
+## 전체 기능
 
-- **메뉴얼**: [https://www.appboxapp.com/guide/dev](https://www.appboxapp.com/guide/dev)
-
----
-
-## 데모앱 다운로드
-
-- GooglePlay : https://play.google.com/store/apps/details?id=kr.co.mobpa.appbox
-- AppStore : https://apps.apple.com/kr/app/id6737824370
-
+**푸시 콘솔 페이지를 활용하여 사용할 수 있는 기능**
+1. 테스트 및 예약 발송 기능
+2. 진동이나 사운드없이 조용한 발송 기능
+3. 파라미터 및 URL 이동 기능
+4. 푸시 데이터 발송 통계 제공(OS별 성공/실패/오픈률 집계)
+5. 푸시 수신 방문율 제공(푸시 오픈 시간 추이 및 발송 시간대별 푸시 오픈률 제공)
+   
 ---
 
 ## 설치 방법
@@ -80,11 +82,14 @@ SDK를 사용하려면 `Info.plist` 파일에 아래와 같은 항목을 추가�
 
 ## 사용법
 
-### 1. SDK 초기화
+### 1. SDK 초기 설정
 
-AppBoxNotification SDK를 사용하려면 먼저 초기화를 수행해야 합니다. initSDK 메서드를 호출하여 초기화를 완료하세요.
+AppBoxNotificationSDK를 초기화합니다.
+`autoRegisterForAPNS`는 기본값이 `true`입니다.
+특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.
+기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.
 
-`AppDelegate`에서 초기화를 진행합니다.
+`AppDelegate`에서 초기설정을 진행합니다.
 
 #### import 설정:
 
@@ -94,20 +99,25 @@ import AppBoxNotificationSDK
 
 #### 예제 코드:
 
+##### Firebase 미사용
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+// APNS 권한 및 등록
+UNUserNotificationCenter.current().delegate = self
 
 // AppBoxNotification 초기화
-// Firbase가 init이 있을 경우
-// FirebaseApp.configure() 이후 선언
-
-AppBoxNotification.shared.initSDK(projectId: "", debugMode: true) { result, error in
-    if let error = error {
-        print("error :: \(error)")
-    } else {
-        print("success:: \(String(describing: result?.message))")
-    }
+AppBoxNotification.shared.initSDK(projectId: "YOUR_PROJECT_ID", debugMode: true) { result, error, granted in
+   if let error = error {
+       print("error :: \(error)")
+   } else {
+       print("success :: \(String(describing: result?.message))")
+   }
+   
+   if let granted = granted {
+       if !granted.boolValue {
+           print("권한 미허용")
+       }
+   }
 }
 
 return true
@@ -115,13 +125,13 @@ return true
 
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     
-    // AppBoxNotification FCM APNS 토큰 등록 (FCM Messaging 사용 중이 아닐 경우 (필수))
+    // AppBoxNotification APNS 토큰 등록 및 푸시토큰 저장
     AppBoxNotification.shared.application(didRegisterForRemoteNotificationsWithDeviceToken: deviceToken) { result, error in
-        if let error = error {
-            print("error :: \(error)")
-        } else {
-            print("success:: \(String(describing: result?.message)) pushToken :: \(String(describing: result?.token))")
-        }
+         if let error = error {
+             print("error :: \(error)")
+         } else {
+             print("success:: \(String(describing: result?.message)) pushToken :: \(String(describing: result?.token))")
+         }
     }
 }
 
@@ -144,90 +154,141 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 }
 ```
 
+##### Firebase 사용
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+// FirebaseApp 초기화
+FirebaseApp.configure()
+
+// AppBoxNotification 초기화
+AppBoxNotification.shared.initSDK(projectId: "YOUR_PROJECT_ID", debugMode: true, autoRegisterForAPNS: false) { result, error, granted in
+   if let error = error {
+       print("error :: \(error)")
+   } else {
+       print("success:: \(String(describing: result?.message))")
+   }
+}
+
+// AppBoxNotification 푸시권한 요청
+AppBoxNotification.shared.requestPushAuthorization { granted in
+   if granted {
+       print("권한 허용")
+   } else {
+       print("권한 실패")
+   }
+}
+
+// APNS 권한 및 등록
+UNUserNotificationCenter.current().delegate = self
+application.registerForRemoteNotifications()
+
+return true
+}
+
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    
+    // AppBoxNotification APNS 토큰 등록 및 푸시토큰 저장
+    AppBoxNotification.shared.application(didRegisterForRemoteNotificationsWithDeviceToken: deviceToken) { result, error in
+         if let error = error {
+             print("error :: \(error)")
+         } else {
+             print("success:: \(String(describing: result?.message)) pushToken :: \(String(describing: result?.token))")
+         }
+    }
+}
+
+// MARK: UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    //알림이 클릭이 되었을 때
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // AppBoxNotification 클릭 데이터 제공
+        if let notiReceive = AppBoxNotification.shared.receiveNotiModel(response) {
+            print("push received :: \(notiReceive.params)")
+        }
+        completionHandler()
+    }
+    
+    // foreground일 때, 알림이 발생
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // AppBoxNotification sound 설정
+        completionHandler([.badge, .alert, .sound])
+    }
+}
+```
 ---
 
-### 2. SDK 실행
+### 2. 기능
 
-초기화된 SDK를 실행하려면 start 메서드를 호출하세요. 실행 결과는 콜백을 통해 전달됩니다.
+initSDK로 초기화 후 다음 기능들을 사용할 수 있습니다.
+
+- #### **푸시토큰 제공**
+
+저장된 푸시토큰을 제공합니다.
 
 #### 예제 코드:
 
 ```swift
+// 푸시 토큰 가져오기
+let pushToken: String? = AppBoxNotification.shared.getPushToken()
+```
 
-// AppBox 실행
-AppBox.shared.start(from: self) { isSuccess, error in
-   if isSuccess {
-       // 실행 성공 처리
-       print("AppBox:: SDK 실행 성공")
-   } else {
-       // 실행 실패 처리
-       if let error = error {
-           print("error : \(error.localizedDescription)")
+- #### **푸시토큰 저장 및 알림 수신 여부 설정**
+
+푸시 알림에 대한 사용 여부와 토큰을 저장합니다.
+
+#### 예제 코드:
+
+```swift
+// 푸시 토큰 저장하기
+AppBoxNotification.shared.savePushToken(token: pushToken, pushYn: true) { result, error in
+    if let error = error {
+        print("error :: \(error)")
+    } else {
+        print("success :: \(String(describing: result?.message)) pushToken :: \(String(describing: result?.token))")
+    }
+}
+```
+
+- #### **푸시토큰 갱신 이벤트 설정**
+
+AppBoxNotificationSDK에서 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate입니다.
+푸시 토큰이 성공적으로 발급되고 저장된 후 `appBoxPushTokenDidUpdate(_:)` 메서드가 호출됩니다.
+
+#### 예제 코드:
+
+```swift
+// 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate
+AppBoxNotification.shared.delegate = self
+     
+extension ViewController: AppBoxNotificationDelegate {
+   func appBoxPushTokenDidUpdate(_ token: String?) {
+       if let token = token {
+           print("appBoxPushTokenDidUpdate :: \(token)")
        } else {
-           print("error : unkown Error")
+           print("appBoxPushTokenDidUpdate :: nil")
        }
    }
 }
-```
 
----
+- #### **푸시 권한 요청**
 
-### 3. 추가 기능 설정
-
-AppBox SDK 실행 전 추가 기능이 설정이 되어야 적용이 됩니다.
-
-- #### **BaseUrl 설정**
-
-AppBox SDK init에 설정된 BaseUrl를 재설정 합니다.
+푸시 알림 권한을 요청합니다.
+시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.
+이미 권한이 허용된 경우에는 별도의 요청 없이 바로 `true`를 반환하며,
+거부되었거나 요청할 수 없는 상태인 경우 `false`를 반환합니다.
 
 #### 예제 코드:
 
 ```swift
-// AppBox BaseUrl 설정
-AppBox.shared.setBaseUrl(baseUrl: "https://example.com")
-```
-
-- #### **Debug 설정**
-
-AppBox SDK init에 설정된 Debug모드를 재설정 합니다.
-
-#### 예제 코드:
-
-```swift
-// AppBox Debug모드 설정
-AppBox.shared.setDebug(debugMode: true)
-```
-
-- #### **인트로 설정**
-
-최초 앱 설치 후 AppBox SDK를 실행 시 인트로 화면이 노출됩니다.
-
-#### 예제 코드:
-
-```swift
-// AppBox 인트로 설정
-if let introItem1 = AppBoxIntroItems(imageUrl: "https://example.com/image.jpg") {
-  let items = [introItem1]
-  let intro = AppBoxIntro(indicatorDefColor: "#a7abab", indicatorSelColor: "#000000", fontColor: "#000000", item: items)
-  AppBox.shared.setIntro(intro)
-} else {
-  print("Failed to initialize AppBoxIntro with empty URL.")
+// AppBoxNotification 푸시권한 요청
+AppBoxNotification.shared.requestPushAuthorization { granted in
+   if granted {
+       UIApplication.shared.registerForRemoteNotifications()
+   } else {
+       print("알림 권한이 거부되었습니다.")
+   }
 }
-```
-
-- #### **당겨서 새로고침 설정**
-
-스크롤을 당기면 웹이 새로고침되는 기능입니다.
-
-사용여부 설정에 따라서 당겨서 새로고침 기능이 적용이 됩니다.
-
-#### 예제 코드:
-
-```swift
-// AppBox 당겨서 새로고침 설정
-AppBox.shared.setPullDownRefresh(
-   used: true
-)
 ```
 
 ---
@@ -245,6 +306,9 @@ AppBox.shared.setPullDownRefresh(
 1. **초기화 필수**
    - initSDK를 호출하여 SDK를 초기화한 후에만 다른 기능을 사용할 수 있습니다.
    - 초기화를 수행하지 않으면 실행 시 예외가 발생할 수 있습니다.
+
+2. **Firebase 종속성**
+   - AppBoxNotification SDK는 [Firebase 11.11.0] 종속성으로 사용하고 있습니다.
 
 ---
 

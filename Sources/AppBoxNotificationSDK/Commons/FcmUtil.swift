@@ -29,22 +29,18 @@ class FcmUtil {
                 switch result {
                 case .success(let model):
                     if model.success {
-                        debugLog("Success :: \(pushToken)")
                         AppBoxCoreFramework.shared.coreSavePushToken(pushToken)
                         completion(.success(AppBoxNotiResultModel(token: pushToken, message: "")))
                     } else {
                         let serverError = ErrorHandler.ServerError(model.message)
-                        debugLog("Error :: \(serverError.errorMessgae)")
                         completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                     }
                 case .failure(let error):
                     var serverError = ErrorHandler.ServerError(error.localizedDescription)
                     let nsError = error as NSError
                     if ErrorHandler.allErrorCodes.contains(nsError.code) {
-                        debugLog("Error :: \(nsError.localizedDescription)")
                         completion(.failure(nsError))
                     } else {
-                        debugLog("Error :: \(serverError.errorMessgae)")
                         completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                     }
                 }

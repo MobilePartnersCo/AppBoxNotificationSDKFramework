@@ -130,8 +130,10 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
+                    debugLog("Success :: \(model.token)")
                     completion?(model, nil)
                 case .failure(let error):
+                    debugLog("Error :: \(error.localizedDescription)")
                     completion?(nil, error as NSError)
                 }
                 self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
@@ -155,8 +157,10 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
+                    debugLog("Success :: \(model.token)")
                     completion?(model, nil)
                 case .failure(let error):
+                    debugLog("Error :: \(error.localizedDescription)")
                     completion?(nil, error as NSError)
                 }
                 self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())

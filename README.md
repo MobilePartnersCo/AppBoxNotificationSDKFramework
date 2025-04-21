@@ -316,7 +316,7 @@ AppBoxNotification.shared.requestPushAuthorization { granted in
 
 문제가 발생하거나 추가 지원이 필요한 경우 아래로 연락하세요:
 
-- **이메일**: [contact@mobpa.co.kr](mailto:contact@mobpa.co.kr)
+- **이메일**: [appbox@mobpa.co.kr](mailto:appbox@mobpa.co.kr)
 - **홈페이지**: [https://www.appboxapp.com](https://www.appboxapp.com)
 
 ---

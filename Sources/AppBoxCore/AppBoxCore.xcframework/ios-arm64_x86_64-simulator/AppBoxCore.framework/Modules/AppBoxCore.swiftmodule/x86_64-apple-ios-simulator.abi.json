@@ -445,31 +445,6 @@
           },
           {
             "kind": "Function",
-            "name": "coreGetInit",
-            "printedName": "coreGetInit()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10AppBoxCore0abC8ProtocolP11coreGetInitSbyF",
-            "mangledName": "$s10AppBoxCore0abC8ProtocolP11coreGetInitSbyF",
-            "moduleName": "AppBoxCore",
-            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
-            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
-            "protocolReq": true,
-            "spi_group_names": [
-              "AppBoxNotification_Internal"
-            ],
-            "reqNewWitnessTableEntry": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
             "name": "coreGetPushInfo",
             "printedName": "coreGetPushInfo(completion:)",
             "children": [
@@ -870,29 +845,6 @@
             "declKind": "Func",
             "usr": "s:10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
             "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
-            "moduleName": "AppBoxCore",
-            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
-            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
-            "isFromExtension": true,
-            "spi_group_names": [
-              "AppBoxNotification_Internal"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "coreGetInit",
-            "printedName": "coreGetInit()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10AppBoxCore0abC8ProtocolPAAE11coreGetInityyF",
-            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE11coreGetInityyF",
             "moduleName": "AppBoxCore",
             "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
             "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",

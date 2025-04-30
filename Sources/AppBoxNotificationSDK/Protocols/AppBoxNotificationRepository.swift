@@ -127,13 +127,6 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
-        guard AppBoxCoreFramework.shared.coreGetInit() else {
-            let error = ErrorHandler.validInit
-            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
-            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
-            return
-        }
-        
         guard !DuplicateTracker.shared.isCalled(.application) else {
             let error = ErrorHandler.alreadyExcute
             debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
@@ -173,14 +166,6 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func savePushToken(token: String, pushYn: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
-        
-        guard AppBoxCoreFramework.shared.coreGetInit() else {
-            let error = ErrorHandler.validInit
-            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
-            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
-            return
-        }
-        
         guard !DuplicateTracker.shared.isCalled(.savePushToken) else {
             let error = ErrorHandler.alreadyExcute
             debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
@@ -222,12 +207,6 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func saveNotiClick(_ receive: UNNotificationResponse) {
-        guard AppBoxCoreFramework.shared.coreGetInit() else {
-            let error = ErrorHandler.validInit
-            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
-            return
-        }
-        
         guard !DuplicateTracker.shared.isCalled(.coreSavePushOpen) else {
             let error = ErrorHandler.alreadyExcute
             debugLog("Warning :: \(error.errorMessgae)", isWarning: true)

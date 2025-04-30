@@ -3141,6 +3141,13 @@
       "value": "\"DELETE\""
     },
     {
+      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/networks\/managers\/URLSessionNetworkClient.swift",
+      "kind": "BooleanLiteral",
+      "offset": 375,
+      "length": 5,
+      "value": "false"
+    },
+    {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/UserDefaultManager.swift",
       "kind": "StringLiteral",
       "offset": 241,

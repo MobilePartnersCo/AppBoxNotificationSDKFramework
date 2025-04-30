@@ -374,6 +374,102 @@
           },
           {
             "kind": "Function",
+            "name": "coreInitQueue",
+            "printedName": "coreInitQueue(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP13coreInitQueueyySbF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP13coreInitQueueyySbF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreEnqueue",
+            "printedName": "coreEnqueue(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP11coreEnqueueyyyycF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP11coreEnqueueyyyycF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreGetInit",
+            "printedName": "coreGetInit()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP11coreGetInitSbyF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP11coreGetInitSbyF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "coreGetPushInfo",
             "printedName": "coreGetPushInfo(completion:)",
             "children": [
@@ -705,6 +801,98 @@
             "declKind": "Func",
             "usr": "s:10AppBoxCore0abC8ProtocolPAAE17coreSaveDebugModeyySbF",
             "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE17coreSaveDebugModeyySbF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreInitQueue",
+            "printedName": "coreInitQueue(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE13coreInitQueueyySbF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE13coreInitQueueyySbF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreEnqueue",
+            "printedName": "coreEnqueue(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreGetInit",
+            "printedName": "coreGetInit()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE11coreGetInityyF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE11coreGetInityyF",
             "moduleName": "AppBoxCore",
             "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
             "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
@@ -2909,6 +3097,20 @@
       "offset": 1884,
       "length": 2,
       "value": "12"
+    },
+    {
+      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/QueueManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 206,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/commons\/QueueManager.swift",
+      "kind": "Array",
+      "offset": 442,
+      "length": 2,
+      "value": "[]"
     },
     {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/networks\/protocols\/RequestProtocol.swift",

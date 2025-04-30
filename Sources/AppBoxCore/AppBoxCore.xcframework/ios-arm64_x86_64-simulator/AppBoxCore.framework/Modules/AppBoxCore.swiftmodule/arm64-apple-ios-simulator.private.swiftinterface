@@ -17,6 +17,9 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) func coreSavePushToken(_ pushToken: Swift.String)
   @_spi(AppBoxNotification_Internal) func coreGetPushToken() -> Swift.String?
   @_spi(AppBoxNotification_Internal) func coreSaveDebugMode(_ isDebug: Swift.Bool)
+  @_spi(AppBoxNotification_Internal) func coreInitQueue(_ success: Swift.Bool)
+  @_spi(AppBoxNotification_Internal) func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) func coreGetInit() -> Swift.Bool
 }
 @_spi(AppBoxNotification_Internal) extension AppBoxCore.AppBoxCoreProtocol {
   @_spi(AppBoxNotification_Internal) public func coreGetPushInfo(completion: @escaping (Swift.Result<AppBoxCore.AppPushInfoApiModel, any Swift.Error>) -> Swift.Void)
@@ -27,6 +30,9 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public func coreSavePushToken(_ pushToken: Swift.String)
   @_spi(AppBoxNotification_Internal) public func coreGetPushToken() -> Swift.String?
   @_spi(AppBoxNotification_Internal) public func coreSaveDebugMode(_ isDebug: Swift.Bool)
+  @_spi(AppBoxNotification_Internal) public func coreInitQueue(_ success: Swift.Bool)
+  @_spi(AppBoxNotification_Internal) public func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) public func coreGetInit()
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId

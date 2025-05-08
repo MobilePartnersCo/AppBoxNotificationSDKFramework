@@ -195,6 +195,8 @@ import UserNotifications
      */
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel?
     
+    func saveNotiClick(_ receive: UNNotificationResponse)
+    
     /**
      # requestPushAuthorization
      

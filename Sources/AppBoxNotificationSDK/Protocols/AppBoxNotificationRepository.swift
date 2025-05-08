@@ -14,6 +14,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     public weak var delegate: AppBoxNotificationDelegate?
     let center = UNUserNotificationCenter.current()
     
+    
     func initSDK(projectId: String?) {
         initSDK(projectId: projectId, debugMode: false, autoRegisterForAPNS: true, completion: nil)
     }
@@ -31,6 +32,15 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func initSDK(projectId: String?, debugMode: Bool, autoRegisterForAPNS: Bool, completion: ((AppBoxNotiResultModel?, NSError?, NSNumber?) -> Void)?) {
+        guard !DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.preventDuplicate
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]), nil)
+            return
+        }
+        
+        
+        DuplicateTracker.shared.set(.initSDK)
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
         let pId = projectId ?? ""
@@ -39,7 +49,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
-            ConfigData.shared.initalize = true
+            AppBoxCoreFramework.shared.coreInitQueue(true)
             let model = AppBoxNotiResultModel(token: "", message: initMessage)
             debugLog("Success :: \(initMessage)")
             
@@ -60,7 +70,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     switch result {
                     case .success(let model):
                         if model.success {
-                            ConfigData.shared.initalize = true
+                            AppBoxCoreFramework.shared.coreInitQueue(true)
                             
                             let options = FirebaseOptions(
                                 googleAppID: model.firebase_info.app_id,
@@ -87,15 +97,17 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             
                             
                         } else {
-                            ConfigData.shared.initalize = false
+                            AppBoxCoreFramework.shared.coreInitQueue(false)
+                            DuplicateTracker.shared.clear(.initSDK)
                             let serverError = ErrorHandler.ServerError(model.message)
                             debugLog("Error :: \(serverError.errorMessgae)")
                             completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
                         }
                     case .failure(let error):
-                        ConfigData.shared.initalize = false
+                        AppBoxCoreFramework.shared.coreInitQueue(false)
+                        DuplicateTracker.shared.clear(.initSDK)
                         
-                        var serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        let serverError = ErrorHandler.ServerError(error.localizedDescription)
                         let nsError = error as NSError
                         if ErrorHandler.allErrorCodes.contains(nsError.code) {
                             debugLog("Error :: \(nsError.localizedDescription)")
@@ -115,28 +127,36 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func application(didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
-        if !ConfigData.shared.initalize {
-            let initError = ErrorHandler.validInit
-            debugLog("Error :: \(initError.errorMessgae)")
-            completion?(nil, NSError(domain: "", code: initError.errorCode, userInfo: [NSLocalizedDescriptionKey: initError.errorMessgae]))
+        guard !DuplicateTracker.shared.isCalled(.application) else {
+            let error = ErrorHandler.alreadyExcute
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
             return
         }
         
-        if !ConfigData.shared.isFcmInit {
-            Messaging.messaging().apnsToken = deviceToken
-        }
-        
-        FcmUtil.saveFcmToken { (result: Result<AppBoxNotiResultModel, Error>) in
+        DuplicateTracker.shared.set(.application)
+
+        AppBoxCoreFramework.shared.coreEnqueue {
             DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    debugLog("Success :: \(model.token)")
-                    completion?(model, nil)
-                case .failure(let error):
-                    debugLog("Error :: \(error.localizedDescription)")
-                    completion?(nil, error as NSError)
+                if !ConfigData.shared.isFcmInit {
+                    Messaging.messaging().apnsToken = deviceToken
                 }
-                self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
+                
+                FcmUtil.saveFcmToken { (result: Result<AppBoxNotiResultModel, Error>) in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let model):
+                            debugLog("Success :: \(model.token)")
+                            completion?(model, nil)
+                            DuplicateTracker.shared.clear(.application)
+                        case .failure(let error):
+                            debugLog("Error :: \(error.localizedDescription)")
+                            completion?(nil, error as NSError)
+                            DuplicateTracker.shared.clear(.application)
+                        }
+                        self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
+                    }
+                }
             }
         }
     }
@@ -146,24 +166,30 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func savePushToken(token: String, pushYn: Bool, completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
-        if !ConfigData.shared.initalize {
-            let initError = ErrorHandler.validInit
-            debugLog("Error :: \(initError.errorMessgae)")
-            completion?(nil, NSError(domain: "", code: initError.errorCode, userInfo: [NSLocalizedDescriptionKey: initError.errorMessgae]))
+        guard !DuplicateTracker.shared.isCalled(.savePushToken) else {
+            let error = ErrorHandler.alreadyExcute
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
             return
         }
         
-        FcmUtil.setToken(pushToken: token, pushYn: pushYn) { (result: Result<AppBoxNotiResultModel, Error>) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    debugLog("Success :: \(model.token)")
-                    completion?(model, nil)
-                case .failure(let error):
-                    debugLog("Error :: \(error.localizedDescription)")
-                    completion?(nil, error as NSError)
+        DuplicateTracker.shared.set(.savePushToken)
+
+        AppBoxCoreFramework.shared.coreEnqueue {
+            FcmUtil.setToken(pushToken: token, pushYn: pushYn) { (result: Result<AppBoxNotiResultModel, Error>) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        debugLog("Success :: \(model.token) pushYn: \(pushYn)")
+                        completion?(model, nil)
+                        DuplicateTracker.shared.clear(.savePushToken)
+                    case .failure(let error):
+                        debugLog("Error :: \(error.localizedDescription)")
+                        completion?(nil, error as NSError)
+                        DuplicateTracker.shared.clear(.savePushToken)
+                    }
+                    self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
                 }
-                self.delegate?.appBoxPushTokenDidUpdate?(self.getPushToken())
             }
         }
     }
@@ -173,30 +199,42 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     }
     
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel? {
-        if !ConfigData.shared.initalize {
-            let initError = ErrorHandler.validInit
-            debugLog("Error :: \(initError.errorMessgae)")
-            return nil
-        }
-        
         if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {
             let model = AppBoxNotiModel(params: content.param)
-            
-            AppBoxCoreFramework.shared.coreSavePushOpen(notiModel: content) { (result: Result<AppPushOpenApiModel, Error>) in
-                switch result {
-                case .success(let model):
-                    if !model.success {
-                        let serverError = ErrorHandler.ServerError(model.message)
-                        debugLog("Error :: \(serverError.errorMessgae)")
-                    }
-                case .failure(let error):
-                    let serverError = ErrorHandler.ServerError(error.localizedDescription)
-                    debugLog("Error :: \(serverError.errorMessgae)")
-                }
-            }
             return model
         }
         return nil
+    }
+    
+    func saveNotiClick(_ receive: UNNotificationResponse) {
+        guard !DuplicateTracker.shared.isCalled(.coreSavePushOpen) else {
+            let error = ErrorHandler.alreadyExcute
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            return
+        }
+        
+        DuplicateTracker.shared.set(.coreSavePushOpen)
+        
+        AppBoxCoreFramework.shared.coreEnqueue {
+            if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {
+                AppBoxCoreFramework.shared.coreSavePushOpen(notiModel: content) { (result: Result<AppPushOpenApiModel, Error>) in
+                    switch result {
+                    case .success(let model):
+                        if !model.success {
+                            let serverError = ErrorHandler.ServerError(model.message)
+                            debugLog("Error :: \(serverError.errorMessgae)")
+                        } else {
+                            debugLog("Save Success")
+                        }
+                        DuplicateTracker.shared.clear(.coreSavePushOpen)
+                    case .failure(let error):
+                        let serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        debugLog("Error :: \(serverError.errorMessgae)")
+                        DuplicateTracker.shared.clear(.coreSavePushOpen)
+                    }
+                }
+            }
+        }
     }
     
     func requestPushAuthorization(completion: @escaping (Bool) -> Void) {

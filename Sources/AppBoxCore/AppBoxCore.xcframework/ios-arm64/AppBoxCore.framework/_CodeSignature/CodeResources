@@ -10,27 +10,27 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		SFpj1sfR5Vd9MCoFTDFnVEAXuKQ=
+		k837a+z3fR7gGytEBCkJDyvUpFE=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		tHkCj6D8eSlD3IHFS8S9X0jnvGo=
+		DSiib/33Uv8I/jAUIddxjxxDZdk=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		g0vpnRcyMlybTDIG9yvf9k0wt1M=
+		dXwxvmU6jQrP08b+rX+TYKUpwY0=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		wLp+k7Y2XpqVdEyfJtLJc21+/sU=
+		vAH27Zhnbf7otBI/honuwZW6TTU=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		puuehU2YHf6l1geM1l8CRo8sHas=
+		nRbaczrrnW4Asah36RJvcSIr3nw=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		0g93436dJFSEgSq1V6RTVjII1Tw=
+		XG0o6FPg/veZQdrWeyn845VTnjs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -50,35 +50,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			mAYn2jdky45B4Sj6SlEKXe8LlkE9C7kE95UnDGsARvE=
+			p7ecjGpdJhS8vPX+qac3QP3pCRnxlW4RsGGJpc+rOUI=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dRZl0eQY+VqRpzy8e1VD6cFHBlvV/nFBPyHZTxep7Rk=
+			x/9PYACljNEJjQw3k8E29T/5d9pmO2O+LXtg79jbG8w=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			h+0sxWJVxn1LcACK0WIncmU/OwaLDLNLBeNGzCuCOrQ=
+			KXew8x5dVYQO/Pqd+RqOjHi8boA3AQLNwPi8mZUKAUQ=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9TU8J6AyuFWzhI6vOfpT7kxKx2ihSWg5Dt8i7FQXulg=
+			86v2GMzG/qvvqqI2FnW99DJDcAx2HeypPelvIlLgw0Q=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dt5+0Tf7eqtWdkUONMqjqil9E3ucaAEKcn6UbhR+UVQ=
+			b+/tRp+3QMpriACZpYppdHwxMAW/UIdFlxt7pLrmPR8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -1,4 +1,4 @@
-![AppBoxNotification_JPG](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/resource/image/AppboxVisual.jpg)
+![AppBoxNotification_JPG](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/image/AppboxVisual.jpg)
 
 # AppBoxNotification SDK 사용 샘플소스
 [![Swift Package Manager](https://img.shields.io/badge/SPM-Compatible-green.svg)](https://swift.org/package-manager/)

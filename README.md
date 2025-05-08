@@ -87,7 +87,7 @@ SDK를 사용하려면 `Info.plist` 파일에 아래와 같은 항목을 추가�
 AppBoxNotificationSDK를 초기화합니다.<br>
 `autoRegisterForAPNS`는 기본값이 `true`입니다.<br>
 특별한 사유가 없다면 별도로 설정할 필요 없이 자동으로 APNS 등록 및 푸시 권한이 수행됩니다.<br>
-기존 FCM 연동 앱 등에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.<br><br>
+기존 FCM 연동 앱에서 수동으로 등록을 제어하고 싶다면 `autoRegisterForAPNS: false`로 설정해 주세요.<br><br>
 
 `AppDelegate`에서 초기설정을 진행합니다.
 
@@ -140,6 +140,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     //알림이 클릭이 되었을 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // AppBoxNotification 클릭 데이터 제공
+        AppBoxNotification.shared.saveNotiClick(response)
         if let notiReceive = AppBoxNotification.shared.receiveNotiModel(response) {
             print("push received :: \(notiReceive.params)")
         }
@@ -203,6 +204,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     //알림이 클릭이 되었을 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // AppBoxNotification 클릭 데이터 제공
+        AppBoxNotification.shared.saveNotiClick(response)
         if let notiReceive = AppBoxNotification.shared.receiveNotiModel(response) {
             print("push received :: \(notiReceive.params)")
         }

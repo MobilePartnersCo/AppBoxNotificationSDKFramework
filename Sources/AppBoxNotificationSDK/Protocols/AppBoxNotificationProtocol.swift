@@ -188,13 +188,35 @@ import UserNotifications
      
      ## Example
      ```swift
-     if let notiReceive = AppBoxNotification.shared.receiveNotiModel(response) {
-         print("push received :: \(notiReceive.params)")
+     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+         if let notiReceive = AppBoxNotification.shared.receiveNotiModel(response) {
+             print("push received :: \(notiReceive.params)")
+         }
+        completionHandler()
      }
      ```
      */
     func receiveNotiModel(_ receive: UNNotificationResponse) -> AppBoxNotiModel?
     
+    /**
+     # saveNotiClick
+     
+     푸시 알림 노티를 눌렀을 때 클릭률을 전송합니다.
+     
+     ## Parameters
+     - `receive`:  UNNotificationResponse
+     
+     ## Author
+     - ss.moon
+     
+     ## Example
+     ```swift
+     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        AppBoxNotification.shared.saveNotiClick(response)
+        completionHandler()
+     }
+     ```
+     */
     func saveNotiClick(_ receive: UNNotificationResponse)
     
     /**

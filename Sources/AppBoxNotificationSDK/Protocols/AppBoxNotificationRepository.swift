@@ -46,7 +46,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         let pId = projectId ?? ""
         
         AppBoxCoreFramework.shared.coreSaveProjectId(pId)
-
+        
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
             AppBoxCoreFramework.shared.coreInitQueue(true)

@@ -43,7 +43,10 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         DuplicateTracker.shared.set(.initSDK)
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
-        let pId = projectId ?? ""
+        guard let pId = projectId, !pId.isEmpty else {
+            completion?(nil, NSError(domain: "", code: ErrorHandler.noProjectId.errorCode, userInfo: [NSLocalizedDescriptionKey: ErrorHandler.noProjectId.errorMessgae]), nil)
+            return
+        }
         
         AppBoxCoreFramework.shared.coreSaveProjectId(pId)
         
@@ -135,6 +138,13 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
         
         DuplicateTracker.shared.set(.application)
+        
+        guard DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.validInit
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+            return
+        }
 
         AppBoxCoreFramework.shared.coreEnqueue {
             DispatchQueue.main.async {
@@ -174,6 +184,13 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
         
         DuplicateTracker.shared.set(.savePushToken)
+        
+        guard DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.validInit
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+            return
+        }
 
         AppBoxCoreFramework.shared.coreEnqueue {
             FcmUtil.setToken(pushToken: token, pushYn: pushYn) { (result: Result<AppBoxNotiResultModel, Error>) in
@@ -214,6 +231,12 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
         
         DuplicateTracker.shared.set(.coreSavePushOpen)
+        
+        guard DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.validInit
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            return
+        }
         
         AppBoxCoreFramework.shared.coreEnqueue {
             if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {

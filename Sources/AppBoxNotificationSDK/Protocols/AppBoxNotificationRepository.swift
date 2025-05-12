@@ -44,7 +44,11 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         AppBoxCoreFramework.shared.coreSaveDebugMode(debugMode)
         
         guard let pId = projectId, !pId.isEmpty else {
-            completion?(nil, NSError(domain: "", code: ErrorHandler.noProjectId.errorCode, userInfo: [NSLocalizedDescriptionKey: ErrorHandler.noProjectId.errorMessgae]), nil)
+            let error = ErrorHandler.noProjectId
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(nil, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]), nil)
+            AppBoxCoreFramework.shared.coreInitQueue(false)
+            DuplicateTracker.shared.clear(.initSDK)
             return
         }
         

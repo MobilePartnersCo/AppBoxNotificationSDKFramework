@@ -310,7 +310,7 @@ AppBoxNotification.shared.requestPushAuthorization { granted in
    - 초기화를 수행하지 않으면 실행 시 예외가 발생할 수 있습니다.
 
 2. **Firebase 종속성**
-   - AppBoxNotification SDK는 [Firebase 11.11.0] 종속성으로 사용하고 있습니다.
+   - AppBoxNotification SDK는 [Firebase 11.12.0] 종속성으로 사용하고 있습니다.
 
 ---
 

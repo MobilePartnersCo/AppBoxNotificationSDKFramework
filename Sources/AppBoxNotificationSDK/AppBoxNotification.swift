@@ -11,5 +11,8 @@ import Foundation
 public class AppBoxNotification: NSObject {
     /// AppBoxNotificationProtocol 접근 생성자
     @objc public static let shared: AppBoxNotificationProtocol = AppBoxNotificationRepository.shared
+    
+    /// AppBoxNotificationExtensionProtocol 접근 생성자
+    @objc public static let sharedExtension: AppBoxNotificationExtensionProtocol = AppBoxNotificationExtensionRepository.shared
 }
 

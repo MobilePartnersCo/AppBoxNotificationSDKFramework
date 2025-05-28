@@ -6,9 +6,7 @@
 //
 
 import UIKit
-#if !EXTENSION
 import Firebase
-#endif
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
@@ -307,9 +305,5 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 }
             }
         }
-    }
-    
-    func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        AppBoxCore.AppBoxCoreFramework.shared.coreSetFCMImage(request, contentHandler: contentHandler)
     }
 }

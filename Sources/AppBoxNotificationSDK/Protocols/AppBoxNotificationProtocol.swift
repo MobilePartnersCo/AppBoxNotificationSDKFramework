@@ -247,24 +247,4 @@ import UserNotifications
      ```
      */
     func requestPushAuthorization(completion: @escaping (Bool) -> Void)
-    
-    
-    /**
-     # createFCMImage
-     
-     푸시알림에 이미지를 추가합니다.
-     
-     ## Parameters
-     - `request`: UNNotificationRequest
-     - `contentHandler`:  UNNotificationServiceExtension에 대한 콜백
-     
-     ## Author
-     - ss.moon
-     
-     ## Example
-     ```swift
-     AppBoxNotification.shared.createFCMImage(request, contentHandler: contentHandler)
-     ```
-     */
-    func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void)
 }

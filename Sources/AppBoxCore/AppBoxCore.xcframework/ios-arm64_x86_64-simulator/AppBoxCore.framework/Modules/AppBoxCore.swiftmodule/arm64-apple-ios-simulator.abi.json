@@ -15,6 +15,13 @@
         ]
       },
       {
+        "kind": "Import",
+        "name": "UserNotifications",
+        "printedName": "UserNotifications",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
+      },
+      {
         "kind": "TypeDecl",
         "name": "AppBoxCoreProtocol",
         "printedName": "AppBoxCoreProtocol",
@@ -445,6 +452,54 @@
           },
           {
             "kind": "Function",
+            "name": "coreSetFCMImage",
+            "printedName": "coreSetFCMImage(_:contentHandler:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(UserNotifications.UNNotificationContent) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UNNotificationContent",
+                    "printedName": "UserNotifications.UNNotificationContent",
+                    "usr": "c:objc(cs)UNNotificationContent"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP15coreSetFCMImage_14contentHandlerySo21UNNotificationRequestC_ySo0J7ContentCctF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP15coreSetFCMImage_14contentHandlerySo21UNNotificationRequestC_ySo0J7ContentCctF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "coreGetPushInfo",
             "printedName": "coreGetPushInfo(completion:)",
             "children": [
@@ -845,6 +900,53 @@
             "declKind": "Func",
             "usr": "s:10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
             "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE11coreEnqueueyyyycF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreSetFCMImage",
+            "printedName": "coreSetFCMImage(_:contentHandler:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(UserNotifications.UNNotificationContent) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UNNotificationContent",
+                    "printedName": "UserNotifications.UNNotificationContent",
+                    "usr": "c:objc(cs)UNNotificationContent"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE15coreSetFCMImage_14contentHandlerySo21UNNotificationRequestC_ySo0J7ContentCctF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE15coreSetFCMImage_14contentHandlerySo21UNNotificationRequestC_ySo0J7ContentCctF",
             "moduleName": "AppBoxCore",
             "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
             "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
@@ -1927,6 +2029,27 @@
         "declAttributes": [
           "RawDocComment"
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "MobileCoreServices",
+        "printedName": "MobileCoreServices",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
+      },
+      {
+        "kind": "Import",
+        "name": "UserNotifications",
+        "printedName": "UserNotifications",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
+      },
+      {
+        "kind": "Import",
+        "name": "UniformTypeIdentifiers",
+        "printedName": "UniformTypeIdentifiers",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
       },
       {
         "kind": "Import",

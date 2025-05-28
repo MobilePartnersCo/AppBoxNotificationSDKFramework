@@ -5,7 +5,10 @@
 @_exported import AppBoxCore
 import CommonCrypto
 import Foundation
+import MobileCoreServices
 import Swift
+import UniformTypeIdentifiers
+import UserNotifications
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
@@ -20,6 +23,7 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) func coreSaveDebugMode(_ isDebug: Swift.Bool)
   @_spi(AppBoxNotification_Internal) func coreInitQueue(_ success: Swift.Bool)
   @_spi(AppBoxNotification_Internal) func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) func coreSetFCMImage(_ request: UserNotifications.UNNotificationRequest, contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
 }
 @_spi(AppBoxNotification_Internal) extension AppBoxCore.AppBoxCoreProtocol {
   @_spi(AppBoxNotification_Internal) public func coreGetPushInfo(completion: @escaping (Swift.Result<AppBoxCore.AppPushInfoApiModel, any Swift.Error>) -> Swift.Void)
@@ -32,6 +36,7 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public func coreSaveDebugMode(_ isDebug: Swift.Bool)
   @_spi(AppBoxNotification_Internal) public func coreInitQueue(_ success: Swift.Bool)
   @_spi(AppBoxNotification_Internal) public func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) public func coreSetFCMImage(_ request: UserNotifications.UNNotificationRequest, contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId

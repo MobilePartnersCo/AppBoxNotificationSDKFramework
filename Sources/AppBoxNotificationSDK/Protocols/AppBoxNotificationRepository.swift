@@ -306,4 +306,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             }
         }
     }
+    
+    func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        AppBoxCore.AppBoxCoreFramework.shared.coreSetFCMImage(request, contentHandler: contentHandler)
+    }
 }

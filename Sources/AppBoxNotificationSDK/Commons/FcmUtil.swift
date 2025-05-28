@@ -4,8 +4,9 @@
 //
 //  Created by mobilePartners on 3/26/25.
 //
-
+#if !EXTENSION
 import Firebase
+#endif
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class FcmUtil {

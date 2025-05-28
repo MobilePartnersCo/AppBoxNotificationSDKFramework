@@ -6,8 +6,10 @@
 //
 
 import UIKit
-import Firebase
 @_spi(AppBoxNotification_Internal) import AppBoxCore
+
+#if canImport(Firebase)
+import Firebase
 
 class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     static let shared = AppBoxNotificationRepository()
@@ -307,3 +309,4 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
     }
 }
+#endif

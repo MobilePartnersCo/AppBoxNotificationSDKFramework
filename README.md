@@ -293,6 +293,28 @@ AppBoxNotification.shared.requestPushAuthorization { granted in
    }
 }
 ```
+
+- #### **세그먼트 저장**
+
+콘솔에 설정한 세그먼트를 저장합니다.
+
+#### 예제 코드:
+
+```swift
+// AppBoxNotification 세그먼트 저장
+let segmentModel: [String: String] = [
+    "name": "이름",
+    "age": "12"
+]
+
+AppBoxNotification.shared.saveSegment(segment: segmentModel) { result, error in
+    if let error = error {
+        print("error :: \(error)")
+    } else {
+        print("success :: \(String(describing: result?.message))")
+    }
+}
+```
 ---
 
 ## 요구 사항

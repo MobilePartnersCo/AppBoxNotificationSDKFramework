@@ -267,4 +267,31 @@ import UserNotifications
      ```
      */
     func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void)
+    
+    
+    /**
+     # saveSegment
+     
+     콘솔에 설정한 세그먼트를 저장합니다.
+     
+     ## Parameters
+     - `segment`:  Dictionary<String, String>
+     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
+
+     ## Author
+     - ss.moon
+     
+     ## Example
+     ```swift
+     AppBoxNotification.shared.saveSegment(token: "FCM Token", pushYn: true) { result, error in
+          if let error = error {
+              print("세그먼트 저장 실패: \(error.localizedDescription)")
+          } else {
+              print("세그먼트 저장 성공: \(result.message)")
+          }
+     }
+     ```
+     */
+    func saveSegment(segment: [String: String], completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func saveSegment(segment: [String: String])
 }

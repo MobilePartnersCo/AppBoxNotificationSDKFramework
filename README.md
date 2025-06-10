@@ -117,13 +117,13 @@ SDK를 사용하려면 `Info.plist` 파일에 아래와 같은 항목을 추가�
 ![Extension_Step11_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti11.png)
 
 12. [General] > [Frameworks and Libraries] > ⑬+ 클릭합니다.
-![Extension_Step11_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti12.png)
+![Extension_Step12_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti12.png)
 
 13. ⑭`AppBoxNotificationSDK`를 추가합니다.
-![Extension_Step11_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti13.png)
+![Extension_Step13_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti13.png)
 
 14. ⑮`AppBoxNotificationSDK`이 추가된 것을 확인합니다.
-![Extension_Step11_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti14.png)
+![Extension_Step14_Image](https://raw.githubusercontent.com/MobilePartnersCo/AppBoxNotificationSDKFramework/main/Resource/Image/noti14.png)
 
 15. `NotificationService`파일을 열어 다음과 같이 적용합니다.
 

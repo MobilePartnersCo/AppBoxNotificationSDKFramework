@@ -283,12 +283,17 @@ import UserNotifications
      
      ## Example
      ```swift
-     AppBoxNotification.shared.saveSegment(token: "FCM Token", pushYn: true) { result, error in
-          if let error = error {
-              print("세그먼트 저장 실패: \(error.localizedDescription)")
-          } else {
-              print("세그먼트 저장 성공: \(result.message)")
-          }
+     let segmentModel: [String: String] = [
+         "name": "이름",
+         "age": "12"
+     ]
+     
+     AppBoxNotification.shared.saveSegment(segment: segmentModel) { result, error in
+         if let error = error {
+             print("error :: \(error)")
+         } else {
+             print("success :: \(String(describing: result?.message))")
+         }
      }
      ```
      */

@@ -6,4 +6,3 @@
 //
 
 var initMessage: String = "initSDK init Success."
-var successMessage: String = "Save Success."

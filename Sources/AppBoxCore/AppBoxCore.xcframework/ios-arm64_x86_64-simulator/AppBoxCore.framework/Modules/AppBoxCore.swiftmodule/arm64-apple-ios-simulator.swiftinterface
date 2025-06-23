@@ -5,10 +5,7 @@
 @_exported import AppBoxCore
 import CommonCrypto
 import Foundation
-import MobileCoreServices
 import Swift
-import UniformTypeIdentifiers
-import UserNotifications
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims

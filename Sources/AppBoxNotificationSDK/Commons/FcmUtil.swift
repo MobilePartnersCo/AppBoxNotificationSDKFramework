@@ -4,9 +4,8 @@
 //
 //  Created by mobilePartners on 3/26/25.
 //
-#if !EXTENSION
+
 import Firebase
-#endif
 @_spi(AppBoxNotification_Internal) import AppBoxCore
 
 class FcmUtil {
@@ -33,7 +32,7 @@ class FcmUtil {
                         AppBoxCoreFramework.shared.coreSavePushToken(pushToken)
                         completion(.success(AppBoxNotiResultModel(token: pushToken, message: "")))
                     } else {
-                        let serverError = ErrorHandler.ServerError("\(model.message)(\(model.code))")
+                        let serverError = ErrorHandler.ServerError(model.message)
                         completion(.failure(NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae])))
                     }
                 case .failure(let error):

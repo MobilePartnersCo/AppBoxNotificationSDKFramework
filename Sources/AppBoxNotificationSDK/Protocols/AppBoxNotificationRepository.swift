@@ -80,12 +80,12 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                             AppBoxCoreFramework.shared.coreInitQueue(true)
                             
                             let options = FirebaseOptions(
-                                googleAppID: model.firebase_info.app_id,
-                                gcmSenderID: model.firebase_info.sender_id
+                                googleAppID: model.data?.app_id ?? "",
+                                gcmSenderID: model.data?.sender_id ?? ""
                             )
                             
-                            options.apiKey = model.firebase_info.api_key
-                            options.projectID = model.firebase_info.project_id
+                            options.apiKey = model.data?.api_key
+                            options.projectID = model.data?.project_id
                             
                             FirebaseApp.configure(options: options)
                             
@@ -106,7 +106,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                         } else {
                             AppBoxCoreFramework.shared.coreInitQueue(false)
                             DuplicateTracker.shared.clear(.initSDK)
-                            let serverError = ErrorHandler.ServerError(model.message)
+                            let serverError = ErrorHandler.ServerError("\(model.message)(\(model.code))")
                             debugLog("Error :: \(serverError.errorMessgae)")
                             completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]), nil)
                         }
@@ -248,15 +248,21 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     switch result {
                     case .success(let model):
                         if !model.success {
-                            let serverError = ErrorHandler.ServerError(model.message)
+                            let serverError = ErrorHandler.ServerError("\(model.message)(\(model.code))")
                             debugLog("Error :: \(serverError.errorMessgae)")
                         } else {
-                            debugLog("Save Success")
+                            debugLog("Success :: \(successMessage)")
                         }
                         DuplicateTracker.shared.clear(.coreSavePushOpen)
                     case .failure(let error):
-                        let serverError = ErrorHandler.ServerError(error.localizedDescription)
-                        debugLog("Error :: \(serverError.errorMessgae)")
+                        var serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        let nsError = error as NSError
+                        if ErrorHandler.allErrorCodes.contains(nsError.code) {
+                            debugLog("Error :: \(nsError.localizedDescription)")
+                        } else {
+                            debugLog("Error :: \(serverError.errorMessgae)")
+                        }
+                        
                         DuplicateTracker.shared.clear(.coreSavePushOpen)
                     }
                 }
@@ -302,6 +308,62 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     //알 수없는 상태
                     debugLog("unkown error")
                     completion(false)
+                }
+            }
+        }
+    }
+    
+    func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        AppBoxCore.AppBoxCoreFramework.shared.coreSetFCMImage(request, contentHandler: contentHandler)
+    }
+    
+    func saveSegment(segment: [String : String]) {
+        saveSegment(segment: segment, completion: nil)
+    }
+    
+    func saveSegment(segment: [String : String], completion: ((AppBoxNotiResultModel?, NSError?) -> Void)?) {
+        guard !DuplicateTracker.shared.isCalled(.saveSegment) else {
+            let error = ErrorHandler.alreadyExcute
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            return
+        }
+        
+        DuplicateTracker.shared.set(.saveSegment)
+        
+        guard DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.validInit
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            return
+        }
+        
+        AppBoxCoreFramework.shared.coreEnqueue {
+            AppBoxCoreFramework.shared.coreSaveSegment(segment) { (result: Result<AppPushSegmentApiModel, any Error>) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        if model.success {
+                            let model = AppBoxNotiResultModel(token: "", message: "save Success")
+                            debugLog("Success :: \(successMessage)")
+                            completion?(model, nil)
+                        } else {
+                            let serverError = ErrorHandler.ServerError("\(model.message)(\(model.code))")
+                            debugLog("Error :: \(serverError.errorMessgae)")
+                            completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
+                        }
+                        DuplicateTracker.shared.clear(.saveSegment)
+                    case .failure(let error):
+                        var serverError = ErrorHandler.ServerError(error.localizedDescription)
+                        let nsError = error as NSError
+                        if ErrorHandler.allErrorCodes.contains(nsError.code) {
+                            debugLog("Error :: \(nsError.localizedDescription)")
+                            completion?(nil, nsError)
+                        } else {
+                            debugLog("Error :: \(serverError.errorMessgae)")
+                            completion?(nil, NSError(domain: "", code: serverError.errorCode, userInfo: [NSLocalizedDescriptionKey: serverError.errorMessgae]))
+                        }
+                        
+                        DuplicateTracker.shared.clear(.saveSegment)
+                    }
                 }
             }
         }

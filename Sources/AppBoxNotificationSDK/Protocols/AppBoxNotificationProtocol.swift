@@ -247,4 +247,56 @@ import UserNotifications
      ```
      */
     func requestPushAuthorization(completion: @escaping (Bool) -> Void)
+    
+    
+    /**
+     # createFCMImage
+     
+     푸시알림에 이미지를 추가합니다.
+     
+     ## Parameters
+     - `request`: UNNotificationRequest
+     - `contentHandler`:  UNNotificationServiceExtension에 대한 콜백
+     
+     ## Author
+     - ss.moon
+     
+     ## Example
+     ```swift
+     AppBoxNotification.shared.createFCMImage(request, contentHandler: contentHandler)
+     ```
+     */
+    func createFCMImage(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void)
+    
+    
+    /**
+     # saveSegment
+     
+     콘솔에 설정한 세그먼트를 저장합니다.
+     
+     ## Parameters
+     - `segment`:  Dictionary<String, String>
+     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저  (선택)
+
+     ## Author
+     - ss.moon
+     
+     ## Example
+     ```swift
+     let segmentModel: [String: String] = [
+         "name": "이름",
+         "age": "12"
+     ]
+     
+     AppBoxNotification.shared.saveSegment(segment: segmentModel) { result, error in
+         if let error = error {
+             print("error :: \(error)")
+         } else {
+             print("success :: \(String(describing: result?.message))")
+         }
+     }
+     ```
+     */
+    func saveSegment(segment: [String: String], completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
+    func saveSegment(segment: [String: String])
 }

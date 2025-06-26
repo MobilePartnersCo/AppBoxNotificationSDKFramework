@@ -10,6 +10,7 @@ enum DuplicateType: String {
     case application
     case savePushToken
     case coreSavePushOpen
+    case saveSegment
 }
 
 class DuplicateTracker {

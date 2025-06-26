@@ -1,11 +1,14 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
-// swift-module-flags: -target x86_64-apple-ios13-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AppBoxCore
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target arm64-apple-ios13 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AppBoxCore
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
 @_exported import AppBoxCore
 import CommonCrypto
 import Foundation
+import MobileCoreServices
 import Swift
+import UniformTypeIdentifiers
+import UserNotifications
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
@@ -20,6 +23,8 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) func coreSaveDebugMode(_ isDebug: Swift.Bool)
   @_spi(AppBoxNotification_Internal) func coreInitQueue(_ success: Swift.Bool)
   @_spi(AppBoxNotification_Internal) func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) func coreSetFCMImage(_ request: UserNotifications.UNNotificationRequest, contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) func coreSaveSegment(_ segment: [Swift.String : Swift.String], completion: @escaping (Swift.Result<AppBoxCore.AppPushSegmentApiModel, any Swift.Error>) -> Swift.Void)
 }
 @_spi(AppBoxNotification_Internal) extension AppBoxCore.AppBoxCoreProtocol {
   @_spi(AppBoxNotification_Internal) public func coreGetPushInfo(completion: @escaping (Swift.Result<AppBoxCore.AppPushInfoApiModel, any Swift.Error>) -> Swift.Void)
@@ -32,6 +37,8 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public func coreSaveDebugMode(_ isDebug: Swift.Bool)
   @_spi(AppBoxNotification_Internal) public func coreInitQueue(_ success: Swift.Bool)
   @_spi(AppBoxNotification_Internal) public func coreEnqueue(_ task: @escaping () -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) public func coreSetFCMImage(_ request: UserNotifications.UNNotificationRequest, contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
+  @_spi(AppBoxNotification_Internal) public func coreSaveSegment(_ segment: [Swift.String : Swift.String], completion: @escaping (Swift.Result<AppBoxCore.AppPushSegmentApiModel, any Swift.Error>) -> Swift.Void)
 }
 @_spi(AppBoxNotification_Internal) public enum ErrorHandler : Swift.Error {
   @_spi(AppBoxNotification_Internal) case noProjectId
@@ -62,6 +69,7 @@ import _SwiftConcurrencyShims
 @_spi(AppBoxNotification_Internal) public class AppPushTokenApiModel : Swift.Codable {
   @_spi(AppBoxNotification_Internal) final public let success: Swift.Bool
   @_spi(AppBoxNotification_Internal) final public let message: Swift.String
+  @_spi(AppBoxNotification_Internal) final public let code: Swift.Int
   @_spi(AppBoxNotification_Internal) required public init(from decoder: any Swift.Decoder) throws
   @_spi(AppBoxNotification_Internal) @objc deinit
   @_spi(AppBoxNotification_Internal) public func encode(to encoder: any Swift.Encoder) throws
@@ -75,14 +83,16 @@ import _SwiftConcurrencyShims
 @_spi(AppBoxNotification_Internal) public class AppPushOpenApiModel : Swift.Codable {
   @_spi(AppBoxNotification_Internal) final public let success: Swift.Bool
   @_spi(AppBoxNotification_Internal) final public let message: Swift.String
+  @_spi(AppBoxNotification_Internal) final public let code: Swift.Int
   @_spi(AppBoxNotification_Internal) required public init(from decoder: any Swift.Decoder) throws
   @_spi(AppBoxNotification_Internal) @objc deinit
   @_spi(AppBoxNotification_Internal) public func encode(to encoder: any Swift.Encoder) throws
 }
 @_spi(AppBoxNotification_Internal) public class AppPushInfoApiModel : Swift.Codable {
   @_spi(AppBoxNotification_Internal) final public let success: Swift.Bool
-  @_spi(AppBoxNotification_Internal) final public let firebase_info: AppBoxCore.Firebase_info
+  @_spi(AppBoxNotification_Internal) final public let data: AppBoxCore.Firebase_info?
   @_spi(AppBoxNotification_Internal) final public let message: Swift.String
+  @_spi(AppBoxNotification_Internal) final public let code: Swift.Int
   @_spi(AppBoxNotification_Internal) required public init(from decoder: any Swift.Decoder) throws
   @_spi(AppBoxNotification_Internal) @objc deinit
   @_spi(AppBoxNotification_Internal) public func encode(to encoder: any Swift.Encoder) throws
@@ -92,6 +102,14 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) final public let app_id: Swift.String
   @_spi(AppBoxNotification_Internal) final public let api_key: Swift.String
   @_spi(AppBoxNotification_Internal) final public let sender_id: Swift.String
+  @_spi(AppBoxNotification_Internal) required public init(from decoder: any Swift.Decoder) throws
+  @_spi(AppBoxNotification_Internal) @objc deinit
+  @_spi(AppBoxNotification_Internal) public func encode(to encoder: any Swift.Encoder) throws
+}
+@_spi(AppBoxNotification_Internal) public class AppPushSegmentApiModel : Swift.Codable {
+  @_spi(AppBoxNotification_Internal) final public let success: Swift.Bool
+  @_spi(AppBoxNotification_Internal) final public let message: Swift.String
+  @_spi(AppBoxNotification_Internal) final public let code: Swift.Int
   @_spi(AppBoxNotification_Internal) required public init(from decoder: any Swift.Decoder) throws
   @_spi(AppBoxNotification_Internal) @objc deinit
   @_spi(AppBoxNotification_Internal) public func encode(to encoder: any Swift.Encoder) throws

@@ -4,6 +4,7 @@
 // swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
 @_exported import AppBoxCore
 import CommonCrypto
+import CoreData
 import Foundation
 import MobileCoreServices
 import Swift
@@ -12,3 +13,9 @@ import UserNotifications
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public struct AppConversionApiModel : Swift.Decodable {
+  public let success: Swift.Bool
+  public let message: Swift.String
+  public let code: Swift.Int
+  public init(from decoder: any Swift.Decoder) throws
+}

@@ -576,6 +576,98 @@
           },
           {
             "kind": "Function",
+            "name": "coreSaveConversionData",
+            "printedName": "coreSaveConversionData(notiModel:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AppboxNotificationModel",
+                "printedName": "AppBoxCore.AppboxNotificationModel",
+                "usr": "s:10AppBoxCore23AppboxNotificationModelC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP22coreSaveConversionData9notiModelyAA018AppboxNotificationJ0C_tF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP22coreSaveConversionData9notiModelyAA018AppboxNotificationJ0C_tF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreSendConversion",
+            "printedName": "coreSendConversion(conversionCode:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<AppBoxCore.AppConversionApiModel, any Swift.Error>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<AppBoxCore.AppConversionApiModel, any Swift.Error>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AppConversionApiModel",
+                        "printedName": "AppBoxCore.AppConversionApiModel",
+                        "usr": "s:10AppBoxCore0A18ConversionApiModelV"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "any Swift.Error",
+                        "usr": "s:s5ErrorP"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolP18coreSendConversion14conversionCode10completionySS_ys6ResultOyAA0aG8ApiModelVs5Error_pGctF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolP18coreSendConversion14conversionCode10completionySS_ys6ResultOyAA0aG8ApiModelVs5Error_pGctF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "protocolReq": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "coreGetPushInfo",
             "printedName": "coreGetPushInfo(completion:)",
             "children": [
@@ -1098,6 +1190,96 @@
             "declKind": "Func",
             "usr": "s:10AppBoxCore0abC8ProtocolPAAE15coreSaveSegment_10completionySDyS2SG_ys6ResultOyAA0a4PushG8ApiModelCs5Error_pGctF",
             "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE15coreSaveSegment_10completionySDyS2SG_ys6ResultOyAA0a4PushG8ApiModelCs5Error_pGctF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreSaveConversionData",
+            "printedName": "coreSaveConversionData(notiModel:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AppboxNotificationModel",
+                "printedName": "AppBoxCore.AppboxNotificationModel",
+                "usr": "s:10AppBoxCore23AppboxNotificationModelC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE22coreSaveConversionData9notiModelyAA018AppboxNotificationJ0C_tF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE22coreSaveConversionData9notiModelyAA018AppboxNotificationJ0C_tF",
+            "moduleName": "AppBoxCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
+            "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
+            "isFromExtension": true,
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "coreSendConversion",
+            "printedName": "coreSendConversion(conversionCode:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<AppBoxCore.AppConversionApiModel, any Swift.Error>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<AppBoxCore.AppConversionApiModel, any Swift.Error>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AppConversionApiModel",
+                        "printedName": "AppBoxCore.AppConversionApiModel",
+                        "usr": "s:10AppBoxCore0A18ConversionApiModelV"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "any Swift.Error",
+                        "usr": "s:s5ErrorP"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10AppBoxCore0abC8ProtocolPAAE18coreSendConversion14conversionCode10completionySS_ys6ResultOyAA0aG8ApiModelVs5Error_pGctF",
+            "mangledName": "$s10AppBoxCore0abC8ProtocolPAAE18coreSendConversion14conversionCode10completionySS_ys6ResultOyAA0aG8ApiModelVs5Error_pGctF",
             "moduleName": "AppBoxCore",
             "genericSig": "<τ_0_0 where τ_0_0 : AppBoxCore.AppBoxCoreProtocol>",
             "sugared_genericSig": "<Self where Self : AppBoxCore.AppBoxCoreProtocol>",
@@ -1956,6 +2138,211 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "AppConversionApiModel",
+        "printedName": "AppConversionApiModel",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "success",
+            "printedName": "success",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore0A18ConversionApiModelV7successSbvp",
+            "mangledName": "$s10AppBoxCore0A18ConversionApiModelV7successSbvp",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore0A18ConversionApiModelV7successSbvg",
+                "mangledName": "$s10AppBoxCore0A18ConversionApiModelV7successSbvg",
+                "moduleName": "AppBoxCore",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "message",
+            "printedName": "message",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore0A18ConversionApiModelV7messageSSvp",
+            "mangledName": "$s10AppBoxCore0A18ConversionApiModelV7messageSSvp",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore0A18ConversionApiModelV7messageSSvg",
+                "mangledName": "$s10AppBoxCore0A18ConversionApiModelV7messageSSvg",
+                "moduleName": "AppBoxCore",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "code",
+            "printedName": "code",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore0A18ConversionApiModelV4codeSivp",
+            "mangledName": "$s10AppBoxCore0A18ConversionApiModelV4codeSivp",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore0A18ConversionApiModelV4codeSivg",
+                "mangledName": "$s10AppBoxCore0A18ConversionApiModelV4codeSivg",
+                "moduleName": "AppBoxCore",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AppConversionApiModel",
+                "printedName": "AppBoxCore.AppConversionApiModel",
+                "usr": "s:10AppBoxCore0A18ConversionApiModelV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Decoder",
+                "printedName": "any Swift.Decoder",
+                "usr": "s:s7DecoderP"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10AppBoxCore0A18ConversionApiModelV4fromACs7Decoder_p_tKcfc",
+            "mangledName": "$s10AppBoxCore0A18ConversionApiModelV4fromACs7Decoder_p_tKcfc",
+            "moduleName": "AppBoxCore",
+            "implicit": true,
+            "throwing": true,
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10AppBoxCore0A18ConversionApiModelV",
+        "mangledName": "$s10AppBoxCore0A18ConversionApiModelV",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
@@ -2400,6 +2787,146 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "campaignCode",
+            "printedName": "campaignCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore23AppboxNotificationModelC12campaignCodeSSSgvp",
+            "mangledName": "$s10AppBoxCore23AppboxNotificationModelC12campaignCodeSSSgvp",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore23AppboxNotificationModelC12campaignCodeSSSgvg",
+                "mangledName": "$s10AppBoxCore23AppboxNotificationModelC12campaignCodeSSSgvg",
+                "moduleName": "AppBoxCore",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "spi_group_names": [
+                  "AppBoxNotification_Internal"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "conversionCode",
+            "printedName": "conversionCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10AppBoxCore23AppboxNotificationModelC14conversionCodeSSSgvp",
+            "mangledName": "$s10AppBoxCore23AppboxNotificationModelC14conversionCodeSSSgvp",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "spi_group_names": [
+              "AppBoxNotification_Internal"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10AppBoxCore23AppboxNotificationModelC14conversionCodeSSSgvg",
+                "mangledName": "$s10AppBoxCore23AppboxNotificationModelC14conversionCodeSSSgvg",
+                "moduleName": "AppBoxCore",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "spi_group_names": [
+                  "AppBoxNotification_Internal"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init(userInfo:)",
@@ -2769,6 +3296,57 @@
         "declAttributes": [
           "RawDocComment"
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore"
       },
       {
         "kind": "Import",
@@ -3485,6 +4063,16 @@
         ]
       },
       {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "AppBoxCore",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "TypeDecl",
         "name": "AppPushSegmentApiModel",
         "printedName": "AppPushSegmentApiModel",
@@ -3824,6 +4412,13 @@
       "offset": 375,
       "length": 8,
       "value": "\"DELETE\""
+    },
+    {
+      "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/coreData\/ConversionCoreDataManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 559,
+      "length": 5,
+      "value": "false"
     },
     {
       "filePath": "\/Users\/sangsoo\/Documents\/project\/mobpa\/solution\/appBox\/sendMessage\/appBoxCore\/AppBoxCore\/networks\/managers\/URLSessionNetworkClient.swift",

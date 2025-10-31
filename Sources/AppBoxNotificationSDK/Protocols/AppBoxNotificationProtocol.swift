@@ -299,4 +299,38 @@ import UserNotifications
      */
     func saveSegment(segment: [String: String], completion: ((_ result: AppBoxNotiResultModel?, _ error: NSError?) -> Void)?)
     func saveSegment(segment: [String: String])
+    
+    
+    /**
+     # sendConversion
+     
+     푸시를 통해 저장된 전환 코드를 기반으로 전환 추적 API를 호출합니다.
+     
+     ## Parameters
+     - `conversionCode`: 전환 코드
+     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저 (선택)
+        - `success`: 전환 API 호출 성공 여부
+        - `error`: 에러 발생 시 전달
+
+     ## Author
+     - ss.moon
+     
+     ## Warning
+     - 해당 conversionCode로 저장된 푸시 데이터가 없으면 실패합니다.
+     - 전환 추적은 1회성이며, API 호출 후 데이터가 삭제됩니다.
+     
+     ## Example
+     ```swift
+     // 결제 완료 등 전환 이벤트 발생 시
+     AppBoxNotification.shared.sendConversion(conversionCode: "CONV_001") { success, error in
+         if success {
+             print("✅ 전환 추적 성공")
+         } else {
+             print("❌ 전환 추적 실패: \(error?.localizedDescription ?? "")")
+         }
+     }
+     ```
+     */
+    func sendConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
+    func sendConversion(conversionCode: String)
 }

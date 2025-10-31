@@ -4,21 +4,29 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>AppBoxConversion.momd/AppBoxConversion.mom</key>
+		<data>
+		oku5r3dUO3spH9f4uitzRomu870=
+		</data>
+		<key>AppBoxConversion.momd/VersionInfo.plist</key>
+		<data>
+		UEDtp60yQzC7CGiM6JL2nvYDFYg=
+		</data>
 		<key>Headers/AppBoxCore.h</key>
 		<data>
 		ecKJdMArbltrKQKowvAiXPCaz0I=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		OmJuuHhmJboDL/zzRozLzqSRxJE=
+		qwrUcjeJvaKMT29rA463VPpBSbg=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		IP00LKfDsGea9HE7sKSWofjsY+E=
+		LRaT+MYJ2HTuiit9NTTbLbKFNU8=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Dt3QCwsAODQpMW9XZxT4BQrNVmI=
+		14wod2bBduo8Bb1VkMUUHjiB0Y8=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -26,19 +34,19 @@
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		JurXg8ozV+8A+sDCYi+XsBtERi8=
+		kfjAFSyj4QCMIV1ltVAligDS0rg=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		EVRYxaymrQDdO6Ldk3XWvoV8phM=
+		8bSdTSeNRqgtk4LzTOOM5MJ3d7E=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		IP00LKfDsGea9HE7sKSWofjsY+E=
+		LRaT+MYJ2HTuiit9NTTbLbKFNU8=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		soXmP05Fu7jRgB0L8FejhKctxA4=
+		8bN/G7/gKqlK9V1W/sek3np8nDw=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -46,11 +54,11 @@
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		RMDhyTE2K1CoBnCa388nuAwVtOM=
+		rXZjwvybaIODmrYK0+SMqq95lRA=
 		</data>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		VEqS4ralihmoR7bliK6FJP5xZLc=
+		wo3ivtZgEhF77YgzXWVz+zB219Y=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -59,6 +67,20 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>AppBoxConversion.momd/AppBoxConversion.mom</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			pnoqrD1Yuov6aUb8QdAM8QcfH0U47ucsksBux85nuwc=
+			</data>
+		</dict>
+		<key>AppBoxConversion.momd/VersionInfo.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Rr0zOfVZXtD2McqMq6aopswTy6vkz8G6Xvqeq842Dg4=
+			</data>
+		</dict>
 		<key>Headers/AppBoxCore.h</key>
 		<dict>
 			<key>hash2</key>
@@ -70,14 +92,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			sUCEf3qJ0VT/w6xR+JgOBthbRxX3WZb+lCdPHTjIdV0=
+			hF/Ph7cMj20gyidplE9KcA3QHaW0JotExqR0x4sQaO8=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WNW/hWnzDddrFZO+WLCeu6NPSjO+pOoPJw/Hl+Wvc0o=
+			aO4SZEmMt9VQqrA0hMEsZQ+NyLz7fOEGrF1qp0ir4GQ=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -91,28 +113,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Yl/wFmU0Jl+FsKSdqOsQLsI5Gsxu4HSRs5lg6uZxqB4=
+			vZISpnwcKP9vCMogyV6d6OXZmwxiU8HncIFoD41crmA=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PHGvuA8Yt/Cnw4T19BcO2oVN9imMs6uWZwME9SP/NRc=
+			3i2NHJAY6yNAEBKyhP66JkLWlCEGEOAdG32AWAkpYiw=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sUCEf3qJ0VT/w6xR+JgOBthbRxX3WZb+lCdPHTjIdV0=
+			hF/Ph7cMj20gyidplE9KcA3QHaW0JotExqR0x4sQaO8=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UhRyl7Y1HCA53HTDwnuCJgAaVlcPu+MejO31sSAp/1E=
+			MwvThElOGb+NAmBO6CEbI9xpzHJluC3POO+myvKMF/I=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -126,14 +148,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7QmRgbzbIPiC4pEAmq9VHTC8WBUBZCUe720kPiKocbA=
+			csr86Hzi4SlAROxqOssChSABlhCXDT5qRJ4VAUgUmPo=
 			</data>
 		</dict>
 		<key>Modules/AppBoxCore.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/5rZwM6HvFPPKgYFCOsnWGWORlTskWufDXaffy1YGNY=
+			dxVKn+G9bTnlZbCjBbg+MBi2qyp8CwzHTPHfq5ty+F4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

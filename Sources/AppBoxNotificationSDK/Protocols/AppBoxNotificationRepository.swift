@@ -244,7 +244,6 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         
         AppBoxCoreFramework.shared.coreEnqueue {
             if let content = AppboxNotificationModel(userInfo: receive.notification.request.content.userInfo) {
-                // 1️⃣ 기존: 푸시 클릭 추적
                 AppBoxCoreFramework.shared.coreSavePushOpen(notiModel: content) { (result: Result<AppPushOpenApiModel, Error>) in
                     switch result {
                     case .success(let model):
@@ -268,7 +267,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                     }
                 }
                 
-                // 2️⃣ 신규: Conversion 데이터 저장 (AppBoxCore에 위임)
+                // Conversion 데이터 저장 (AppBoxCore에 위임)
                 AppBoxCoreFramework.shared.coreSaveConversionData(notiModel: content)
             }
         }
@@ -373,7 +372,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
     }
     
-    func sendConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
+    func trackingConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
         guard DuplicateTracker.shared.isCalled(.initSDK) else {
             let error = ErrorHandler.validInit
             debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
@@ -404,7 +403,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
     }
     
-    func sendConversion(conversionCode: String) {
-        sendConversion(conversionCode: conversionCode, completion: nil)
+    func trackingConversion(conversionCode: String) {
+        trackingConversion(conversionCode: conversionCode, completion: nil)
     }
 }

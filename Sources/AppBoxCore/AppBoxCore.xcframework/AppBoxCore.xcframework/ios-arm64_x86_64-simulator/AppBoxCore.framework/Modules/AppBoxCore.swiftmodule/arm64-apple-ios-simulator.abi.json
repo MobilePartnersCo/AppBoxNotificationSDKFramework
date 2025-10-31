@@ -2277,6 +2277,46 @@
           {
             "kind": "Constructor",
             "name": "init",
+            "printedName": "init(success:message:code:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AppConversionApiModel",
+                "printedName": "AppBoxCore.AppConversionApiModel",
+                "usr": "s:10AppBoxCore0A18ConversionApiModelV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10AppBoxCore0A18ConversionApiModelV7success7message4codeACSb_SSSitcfc",
+            "mangledName": "$s10AppBoxCore0A18ConversionApiModelV7success7message4codeACSb_SSSitcfc",
+            "moduleName": "AppBoxCore",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
             "printedName": "init(from:)",
             "children": [
               {

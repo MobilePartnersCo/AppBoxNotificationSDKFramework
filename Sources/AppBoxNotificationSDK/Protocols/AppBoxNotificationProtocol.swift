@@ -302,7 +302,7 @@ import UserNotifications
     
     
     /**
-     # sendConversion
+     # trackingConversion
      
      푸시를 통해 저장된 전환 코드를 기반으로 전환 추적 API를 호출합니다.
      
@@ -322,15 +322,15 @@ import UserNotifications
      ## Example
      ```swift
      // 결제 완료 등 전환 이벤트 발생 시
-     AppBoxNotification.shared.sendConversion(conversionCode: "CONV_001") { success, error in
+     AppBoxNotification.shared.trackingConversion(conversionCode: "CONV_001") { success, error in
          if success {
-             print("✅ 전환 추적 성공")
+             print("전환 추적 성공")
          } else {
-             print("❌ 전환 추적 실패: \(error?.localizedDescription ?? "")")
+             print("전환 추적 실패: \(error?.localizedDescription ?? "")")
          }
      }
      ```
      */
-    func sendConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
-    func sendConversion(conversionCode: String)
+    func trackingConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
+    func trackingConversion(conversionCode: String)
 }

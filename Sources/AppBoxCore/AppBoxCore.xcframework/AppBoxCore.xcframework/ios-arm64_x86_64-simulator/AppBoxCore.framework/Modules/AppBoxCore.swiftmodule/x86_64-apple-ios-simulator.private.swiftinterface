@@ -75,6 +75,7 @@ public struct AppConversionApiModel : Swift.Decodable {
   public let success: Swift.Bool
   public let message: Swift.String
   public let code: Swift.Int
+  public init(success: Swift.Bool, message: Swift.String, code: Swift.Int)
   public init(from decoder: any Swift.Decoder) throws
 }
 @_spi(AppBoxNotification_Internal) public class AppPushTokenApiModel : Swift.Codable {

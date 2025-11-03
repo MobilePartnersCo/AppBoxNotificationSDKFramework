@@ -26,6 +26,7 @@
 3. 파라미터 및 URL 이동 기능
 4. 푸시 데이터 발송 통계 제공(OS별 성공/실패/오픈률 집계)
 5. 푸시 수신 방문율 제공(푸시 오픈 시간 추이 및 발송 시간대별 푸시 오픈률 제공)
+6. 전환 추적 기능 - 푸시를 통한 사용자 행동 전환 측정 (v1.0.3+)
    
 ---
 
@@ -299,9 +300,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 ### 2. 기능
 
-initSDK로 초기화 후 다음 기능들을 사용할 수 있습니다.
+#### **initSDK**로 초기화 후 다음 기능들을 사용할 수 있습니다.
 
-- #### **푸시토큰 제공**
+<br>
+
+#### **푸시토큰 제공**
 
 저장된 푸시토큰을 제공합니다.
 
@@ -312,7 +315,10 @@ initSDK로 초기화 후 다음 기능들을 사용할 수 있습니다.
 let pushToken: String? = AppBoxNotification.shared.getPushToken()
 ```
 
-- #### **푸시토큰 저장 및 알림 수신 여부 설정**
+<br>
+<br>
+
+#### **푸시토큰 저장 및 알림 수신 여부 설정**
 
 푸시 알림에 대한 사용 여부와 토큰을 저장합니다.
 
@@ -329,7 +335,10 @@ AppBoxNotification.shared.savePushToken(token: pushToken, pushYn: true) { result
 }
 ```
 
-- #### **푸시토큰 갱신 이벤트 설정**
+<br>
+<br>
+
+#### **푸시토큰 갱신 이벤트 설정**
 
 AppBoxNotificationSDK에서 푸시 토큰 갱신 이벤트를 수신받기 위한 delegate입니다.<br>
 푸시 토큰이 성공적으로 발급되고 저장된 후 `appBoxPushTokenDidUpdate(_:)` 메서드가 호출됩니다.
@@ -351,7 +360,10 @@ extension ViewController: AppBoxNotificationDelegate {
 }
 ```
 
-- #### **푸시 권한 요청**
+<br>
+<br>
+
+#### **푸시 권한 요청**
 
 푸시 알림 권한을 요청합니다.<br>
 시스템 알림 권한 상태를 확인한 뒤, 필요한 경우에만 권한 요청 UI를 표시합니다.<br>
@@ -371,7 +383,10 @@ AppBoxNotification.shared.requestPushAuthorization { granted in
 }
 ```
 
-- #### **세그먼트 저장**
+<br>
+<br>
+
+#### **세그먼트 저장**
 
 콘솔에 설정한 세그먼트를 저장합니다.
 
@@ -392,6 +407,33 @@ AppBoxNotification.shared.saveSegment(segment: segmentModel) { result, error in
     }
 }
 ```
+
+<br>
+<br>
+
+#### **전환 추적**
+
+푸시 알림을 통해 유입된 사용자의 특정 행동을 추적합니다.<br>
+**사용자가 푸시 알림을 클릭하면** 알림에 포함된 `conversionCode`가 자동으로 CoreData에 저장되며, 이후 사용자가 전환 행동을 완료했을 때 `trackingConversion` 메서드를 호출하여 서버에 전송합니다.<br>
+저장된 데이터는 삭제되지 않으므로 동일한 `conversionCode`로 여러 번 전환 추적이 가능합니다.
+
+#### 예제 코드:
+```swift
+// 전환 이벤트 발생 시
+AppBoxNotification.shared.trackingConversion(conversionCode: "YKFbBcki") { success, error in
+    if success {
+        print("전환 추적 성공")
+    } else {
+        if let error = error {
+            print("전환 추적 실패: \(error.localizedDescription)")
+        }
+    }
+}
+
+// Completion이 필요 없는 경우
+AppBoxNotification.shared.trackingConversion(conversionCode: "YKFbBcki")
+```
+
 ---
 
 ## 요구 사항

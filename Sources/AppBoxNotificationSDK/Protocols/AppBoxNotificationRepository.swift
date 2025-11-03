@@ -266,6 +266,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                         DuplicateTracker.shared.clear(.coreSavePushOpen)
                     }
                 }
+                
+                // Conversion 데이터 저장 (AppBoxCore에 위임)
+                AppBoxCoreFramework.shared.coreSaveConversionData(notiModel: content)
             }
         }
     }
@@ -367,5 +370,40 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 }
             }
         }
+    }
+    
+    func trackingConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
+        guard DuplicateTracker.shared.isCalled(.initSDK) else {
+            let error = ErrorHandler.validInit
+            debugLog("Warning :: \(error.errorMessgae)", isWarning: true)
+            completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+            return
+        }
+        
+        // AppBoxCore에 모든 로직 위임 (단순 전달만)
+        AppBoxCoreFramework.shared.coreEnqueue {
+            AppBoxCoreFramework.shared.coreSendConversion(conversionCode: conversionCode) { (result: Result<AppConversionApiModel, Error>) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        if model.success {
+                            debugLog("Success :: Conversion tracked for \(conversionCode)")
+                            completion?(true, nil)
+                        } else {
+                            let error = NSError(domain: "", code: model.code, userInfo: [NSLocalizedDescriptionKey: model.message])
+                            debugLog("Error :: \(model.message)")
+                            completion?(false, error)
+                        }
+                    case .failure(let error):
+                        debugLog("Error :: \(error.localizedDescription)")
+                        completion?(false, error as NSError)
+                    }
+                }
+            }
+        }
+    }
+    
+    func trackingConversion(conversionCode: String) {
+        trackingConversion(conversionCode: conversionCode, completion: nil)
     }
 }

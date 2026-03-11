@@ -13,6 +13,23 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     static let shared = AppBoxNotificationRepository()
     public weak var delegate: AppBoxNotificationDelegate?
     let center = UNUserNotificationCenter.current()
+
+    // MARK: - Fixed Topic
+
+    private var lastAppliedPushYn: String? {
+        get { AppBoxCoreFramework.shared.coreGetLastAppliedPushYn() }
+        set {
+            if let value = newValue {
+                AppBoxCoreFramework.shared.coreSaveLastAppliedPushYn(value)
+            }
+        }
+    }
+    private var fixedTopics: [String] = []
+
+    // MARK: - Topic Validation
+
+    private let topicRegex = "^[a-zA-Z0-9_-]+$"
+    private let maxTopicLength = 200
     
     
     func initSDK(projectId: String?) {
@@ -53,7 +70,10 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         }
         
         AppBoxCoreFramework.shared.coreSaveProjectId(pId)
-        
+
+        let trimmedProjectId = pId.trimmingCharacters(in: .whitespacesAndNewlines)
+        fixedTopics = trimmedProjectId.isEmpty ? ["IOS"] : [trimmedProjectId, "IOS"]
+
         if let _ = FirebaseApp.app() {
             ConfigData.shared.isFcmInit = true
             AppBoxCoreFramework.shared.coreInitQueue(true)
@@ -152,12 +172,11 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
         AppBoxCoreFramework.shared.coreEnqueue {
             DispatchQueue.main.async {
-                if !ConfigData.shared.isFcmInit {
-                    Messaging.messaging().apnsToken = deviceToken
-                }
-                
+                Messaging.messaging().apnsToken = deviceToken
+
                 FcmUtil.saveFcmToken { (result: Result<AppBoxNotiResultModel, Error>) in
                     DispatchQueue.main.async {
+                        self.processFixedTopicsIfNeeded()
                         switch result {
                         case .success(let model):
                             debugLog("Success :: \(model.token)")
@@ -201,6 +220,8 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let model):
+                        AppBoxCoreFramework.shared.coreSavePushYn(pushYn ? "Y" : "N")
+                        self.syncFixedTopics(pushYn: pushYn ? "Y" : "N")
                         debugLog("Success :: \(model.token) pushYn: \(pushYn)")
                         completion?(model, nil)
                         DuplicateTracker.shared.clear(.savePushToken)
@@ -405,5 +426,157 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     
     func trackingConversion(conversionCode: String) {
         trackingConversion(conversionCode: conversionCode, completion: nil)
+    }
+
+    // MARK: - Topic Subscribe/Unsubscribe (Public API)
+
+    func subscribeToTopic(_ topic: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
+        sendTopicEvent(eventType: "SUBSCRIBE", topic: topic, completion: completion)
+    }
+
+    func subscribeToTopic(_ topic: String) {
+        subscribeToTopic(topic, completion: nil)
+    }
+
+    func unsubscribeFromTopic(_ topic: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
+        sendTopicEvent(eventType: "UNSUBSCRIBE", topic: topic, completion: completion)
+    }
+
+    func unsubscribeFromTopic(_ topic: String) {
+        unsubscribeFromTopic(topic, completion: nil)
+    }
+}
+
+// MARK: - Fixed Topic (Private)
+private extension AppBoxNotificationRepository {
+
+    func processFixedTopicsIfNeeded() {
+        let currentPushYn = AppBoxCoreFramework.shared.coreGetEffectivePushYn()
+        guard lastAppliedPushYn != currentPushYn else {
+            debugLog("processFixedTopics: 이미 처리됨(lastApplied=\(currentPushYn)), 스킵")
+            return
+        }
+        guard !fixedTopics.isEmpty else {
+            debugLog("processFixedTopics: 고정 토픽 없음")
+            lastAppliedPushYn = currentPushYn
+            return
+        }
+        let shouldSubscribe = (currentPushYn == "Y")
+        debugLog("processFixedTopics: 시작 - pushYN=\(currentPushYn), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
+        let group = DispatchGroup()
+        let lock = NSLock()
+        var allSuccess = true
+        for topic in fixedTopics {
+            group.enter()
+            fcmTopic(eventType: shouldSubscribe ? "SUBSCRIBE" : "UNSUBSCRIBE", topic: topic) { success in
+                if !success { lock.lock(); allSuccess = false; lock.unlock() }
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            if allSuccess {
+                self.lastAppliedPushYn = currentPushYn
+                debugLog("processFixedTopics: 완료 - pushYN=\(currentPushYn), topics=\(self.fixedTopics)")
+            } else {
+                debugLog("processFixedTopics: 일부 실패, 다음 실행 시 재시도 (lastAppliedPushYn 미저장)")
+            }
+        }
+    }
+
+    func syncFixedTopics(pushYn: String) {
+        guard !fixedTopics.isEmpty else { return }
+        let shouldSubscribe = (pushYn == "Y")
+        debugLog("syncFixedTopics: 시작 - pushYN=\(pushYn), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
+        let group = DispatchGroup()
+        let lock = NSLock()
+        var allSuccess = true
+        for topic in fixedTopics {
+            group.enter()
+            fcmTopic(eventType: shouldSubscribe ? "SUBSCRIBE" : "UNSUBSCRIBE", topic: topic) { success in
+                if !success { lock.lock(); allSuccess = false; lock.unlock() }
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            if allSuccess {
+                self.lastAppliedPushYn = pushYn
+                debugLog("syncFixedTopics: 완료 - pushYN=\(pushYn), topics=\(self.fixedTopics)")
+            } else {
+                debugLog("syncFixedTopics: 일부 실패, 다음 실행 시 재시도 (lastAppliedPushYn 미저장)")
+            }
+        }
+    }
+
+    func sendTopicEvent(eventType: String, topic: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?) {
+        // [1] 유효성 검사
+        let trimmed = topic.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty,
+              trimmed.count <= maxTopicLength,
+              trimmed.range(of: topicRegex, options: .regularExpression) != nil else {
+            let error = ErrorHandler.rangeValue("topic")
+            debugLog("Warning :: \(error.errorMessgae) - topic=\(topic)", isWarning: true)
+            completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+            return
+        }
+        // [2] 고정 토픽 차단
+        guard !fixedTopics.contains(trimmed) else {
+            let error = ErrorHandler.fixedTopicProtected
+            debugLog("Warning :: \(error.errorMessgae) - topic=\(trimmed)", isWarning: true)
+            completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+            return
+        }
+        // [3] fetchTopicFilter API
+        AppBoxCoreFramework.shared.coreFetchTopicFilter(eventType: eventType, topics: [trimmed]) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    completion?(false, error as NSError)
+                case .success(let model):
+                    guard model.success, let subscribable = model.data?.subscribable, subscribable.contains(trimmed) else {
+                        let error = ErrorHandler.ServerError("\(model.message)(\(model.code))")
+                        completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+                        return
+                    }
+                    // [4] FCM 처리
+                    self.fcmTopic(eventType: eventType, topic: trimmed) { fcmSuccess in
+                        guard fcmSuccess else {
+                            let error = ErrorHandler.ServerError("FCM \(eventType) 실패")
+                            completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+                            return
+                        }
+                        // [5] sendTopicCallback API
+                        AppBoxCoreFramework.shared.coreSendTopicCallback(eventType: eventType, topics: [trimmed]) { [weak self] callbackResult in
+                            guard let self = self else { return }
+                            DispatchQueue.main.async {
+                                switch callbackResult {
+                                case .success(let model) where model.success:
+                                    debugLog("sendTopicEvent: 완료 - topic=\(trimmed), eventType=\(eventType)")
+                                    completion?(true, nil)
+                                default:
+                                    // [6] 콜백 실패 → FCM 롤백
+                                    let rollbackType = eventType == "SUBSCRIBE" ? "UNSUBSCRIBE" : "SUBSCRIBE"
+                                    self.fcmTopic(eventType: rollbackType, topic: trimmed) { _ in
+                                        debugLog("sendTopicEvent: 콜백 실패, FCM 롤백 완료 - topic=\(trimmed)")
+                                        let error = ErrorHandler.ServerError("callback 실패")
+                                        completion?(false, NSError(domain: "", code: error.errorCode, userInfo: [NSLocalizedDescriptionKey: error.errorMessgae]))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func fcmTopic(eventType: String, topic: String, completion: @escaping (Bool) -> Void) {
+        if eventType == "SUBSCRIBE" {
+            Messaging.messaging().subscribe(toTopic: topic) { error in completion(error == nil) }
+        } else {
+            Messaging.messaging().unsubscribe(fromTopic: topic) { error in completion(error == nil) }
+        }
     }
 }

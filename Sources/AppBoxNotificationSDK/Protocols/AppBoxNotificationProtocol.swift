@@ -333,4 +333,62 @@ import UserNotifications
      */
     func trackingConversion(conversionCode: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
     func trackingConversion(conversionCode: String)
+
+    /**
+     # subscribeToTopic
+
+     FCM 토픽을 구독합니다.
+     고정 토픽(projectId, "IOS")은 구독할 수 없습니다.
+
+     ## Parameters
+     - `topic`: 구독할 토픽 이름 (영문자·숫자·언더스코어·하이픈, 최대 200자)
+     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저 (선택)
+        - `success`: 구독 성공 여부
+        - `error`: 에러 발생 시 전달
+
+     ## Author
+     - ss.moon
+
+     ## Example
+     ```swift
+     AppBoxNotification.shared.subscribeToTopic("news") { success, error in
+         if success {
+             print("구독 성공")
+         } else {
+             print("구독 실패: \(error?.localizedDescription ?? "")")
+         }
+     }
+     ```
+     */
+    func subscribeToTopic(_ topic: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
+    func subscribeToTopic(_ topic: String)
+
+    /**
+     # unsubscribeFromTopic
+
+     FCM 토픽 구독을 해제합니다.
+     고정 토픽(projectId, "IOS")은 해제할 수 없습니다.
+
+     ## Parameters
+     - `topic`: 해제할 토픽 이름 (영문자·숫자·언더스코어·하이픈, 최대 200자)
+     - `completion`: 결과를 비동기적으로 전달받을 수 있는 콜백 클로저 (선택)
+        - `success`: 해제 성공 여부
+        - `error`: 에러 발생 시 전달
+
+     ## Author
+     - ss.moon
+
+     ## Example
+     ```swift
+     AppBoxNotification.shared.unsubscribeFromTopic("news") { success, error in
+         if success {
+             print("구독 해제 성공")
+         } else {
+             print("구독 해제 실패: \(error?.localizedDescription ?? "")")
+         }
+     }
+     ```
+     */
+    func unsubscribeFromTopic(_ topic: String, completion: ((_ success: Bool, _ error: NSError?) -> Void)?)
+    func unsubscribeFromTopic(_ topic: String)
 }

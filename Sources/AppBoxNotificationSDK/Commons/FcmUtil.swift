@@ -15,8 +15,9 @@ class FcmUtil {
             
             
             let pushToken = token ?? AppBoxCoreFramework.shared.coreGetPushToken() ?? ""
-            
-            setToken(pushToken: pushToken, pushYn: nil) { (result: Result<AppBoxNotiResultModel, Error>) in
+            let effectiveYn = AppBoxCoreFramework.shared.coreGetEffectivePushYn()
+
+            setToken(pushToken: pushToken, pushYn: effectiveYn == "Y") { (result: Result<AppBoxNotiResultModel, Error>) in
                 DispatchQueue.main.async {
                     completion(result)
                 }

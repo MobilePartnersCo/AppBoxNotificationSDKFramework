@@ -27,7 +27,10 @@
 4. 푸시 데이터 발송 통계 제공(OS별 성공/실패/오픈률 집계)
 5. 푸시 수신 방문율 제공(푸시 오픈 시간 추이 및 발송 시간대별 푸시 오픈률 제공)
 6. 전환 추적 기능 - 푸시를 통한 사용자 행동 전환 측정 (v1.0.3+)
-   
+
+**SDK에서 직접 사용할 수 있는 기능**
+7. 토픽 구독/해제 기능 - 특정 주제(토픽)를 구독하거나 해제하여 맞춤 푸시 수신 (v1.1.0+)
+
 ---
 
 ## 설치 방법
@@ -432,6 +435,37 @@ AppBoxNotification.shared.trackingConversion(conversionCode: "YKFbBcki") { succe
 
 // Completion이 필요 없는 경우
 AppBoxNotification.shared.trackingConversion(conversionCode: "YKFbBcki")
+```
+
+<br>
+<br>
+
+#### **토픽 구독/해제**
+
+특정 주제(토픽)를 구독하거나 해제합니다.<br>
+구독한 토픽으로 발송된 푸시 알림을 수신할 수 있습니다.<br>
+SDK 내부에서 사용하는 고정 토픽은 직접 구독/해제할 수 없습니다.
+
+#### 예제 코드:
+
+```swift
+// 토픽 구독
+AppBoxNotification.shared.subscribeToTopic("topic_name") { success, error in
+    if let error = error {
+        print("구독 실패 :: \(error)")
+    } else {
+        print("구독 성공")
+    }
+}
+
+// 토픽 해제
+AppBoxNotification.shared.unsubscribeFromTopic("topic_name") { success, error in
+    if let error = error {
+        print("해제 실패 :: \(error)")
+    } else {
+        print("해제 성공")
+    }
+}
 ```
 
 ---

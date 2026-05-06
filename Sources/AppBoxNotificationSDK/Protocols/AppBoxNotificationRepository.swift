@@ -194,9 +194,9 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
                 FcmUtil.saveFcmToken { (result: Result<AppBoxNotiResultModel, Error>) in
                     DispatchQueue.main.async {
-                        self.processFixedTopicsIfNeeded()
                         switch result {
                         case .success(let model):
+                            self.processFixedTopicsIfNeeded()
                             debugLog("Success :: \(model.token)")
                             completion?(model, nil)
                             DuplicateTracker.shared.clear(.application)
@@ -473,12 +473,31 @@ private extension AppBoxNotificationRepository {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
             .sorted()
-        
+
         return "\(fixedTopicSignatureVersion)|topics=\(normalizedTopics.joined(separator: ","))"
     }
 
+    func sendFixedTopicCallback(eventType: String, topics: [String], completion: ((Bool) -> Void)? = nil) {
+        guard !topics.isEmpty else {
+            completion?(true)
+            return
+        }
+
+        AppBoxCoreFramework.shared.coreSendTopicCallback(eventType: eventType, topics: topics) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model) where model.success:
+                    debugLog("sendFixedTopicCallback: 완료 - type=\(eventType), topics=\(topics)")
+                    completion?(true)
+                default:
+                    debugLog("sendFixedTopicCallback: 실패 - type=\(eventType), topics=\(topics)")
+                    completion?(false)
+                }
+            }
+        }
+    }
+
     func processFixedTopicsIfNeeded() {
-        let currentPushYn = AppBoxCoreFramework.shared.coreGetEffectivePushYn()
         guard !fixedTopics.isEmpty else {
             debugLog("processFixedTopics: 고정 토픽 없음")
             return
@@ -488,28 +507,32 @@ private extension AppBoxNotificationRepository {
             debugLog("processFixedTopics: 이미 처리됨(signature=\(currentSignature)), 스킵")
             return
         }
-        let shouldSubscribe = (currentPushYn == "Y")
-        debugLog("processFixedTopics: 시작 - pushYN=\(currentPushYn), signature=\(currentSignature), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
+        debugLog("processFixedTopics: 시작 - signature=\(currentSignature), topics=\(fixedTopics), subscribe=true")
         let group = DispatchGroup()
         let lock = NSLock()
         var allSuccess = true
         for topic in fixedTopics {
             group.enter()
-            fcmTopic(eventType: shouldSubscribe ? "SUBSCRIBE" : "UNSUBSCRIBE", topic: topic) { success in
+            fcmTopic(eventType: "SUBSCRIBE", topic: topic) { success in
                 if !success { lock.lock(); allSuccess = false; lock.unlock() }
                 group.leave()
             }
         }
         group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
-            if allSuccess {
-                self.lastAppliedPushYn = currentPushYn
-                if shouldSubscribe {
-                    self.fixedTopicSignature = currentSignature
-                }
-                debugLog("processFixedTopics: 완료 - pushYN=\(currentPushYn), signature=\(currentSignature), topics=\(self.fixedTopics)")
-            } else {
+            guard allSuccess else {
                 debugLog("processFixedTopics: 일부 실패, 다음 실행 시 재시도 (상태 미저장)")
+                return
+            }
+
+            self.sendFixedTopicCallback(eventType: "SUBSCRIBE", topics: self.fixedTopics) { callbackSuccess in
+                guard callbackSuccess else {
+                    debugLog("processFixedTopics: callback 실패, 다음 실행 시 재시도 (상태 미저장)")
+                    return
+                }
+                self.lastAppliedPushYn = "Y"
+                self.fixedTopicSignature = currentSignature
+                debugLog("processFixedTopics: 완료 - signature=\(currentSignature), topics=\(self.fixedTopics)")
             }
         }
     }
@@ -531,14 +554,22 @@ private extension AppBoxNotificationRepository {
         }
         group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
-            if allSuccess {
+            guard allSuccess else {
+                debugLog("syncFixedTopics: 일부 실패, 다음 실행 시 재시도 (상태 미저장)")
+                return
+            }
+
+            let eventType = shouldSubscribe ? "SUBSCRIBE" : "UNSUBSCRIBE"
+            self.sendFixedTopicCallback(eventType: eventType, topics: self.fixedTopics) { callbackSuccess in
+                guard callbackSuccess else {
+                    debugLog("syncFixedTopics: callback 실패, 다음 실행 시 재시도 (상태 미저장)")
+                    return
+                }
                 self.lastAppliedPushYn = pushYn
                 if shouldSubscribe {
                     self.fixedTopicSignature = currentSignature
                 }
                 debugLog("syncFixedTopics: 완료 - pushYN=\(pushYn), signature=\(currentSignature), topics=\(self.fixedTopics)")
-            } else {
-                debugLog("syncFixedTopics: 일부 실패, 다음 실행 시 재시도 (상태 미저장)")
             }
         }
     }

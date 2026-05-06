@@ -338,7 +338,7 @@ import UserNotifications
      # subscribeToTopic
 
      FCM 토픽을 구독합니다.
-     고정 토픽(projectId, "IOS")은 구독할 수 없습니다.
+     고정 토픽(IOS-{projectId})은 구독할 수 없습니다.
 
      ## Parameters
      - `topic`: 구독할 토픽 이름 (영문자·숫자·언더스코어·하이픈, 최대 200자)
@@ -367,7 +367,7 @@ import UserNotifications
      # unsubscribeFromTopic
 
      FCM 토픽 구독을 해제합니다.
-     고정 토픽(projectId, "IOS")은 해제할 수 없습니다.
+     고정 토픽(IOS-{projectId})은 해제할 수 없습니다.
 
      ## Parameters
      - `topic`: 해제할 토픽 이름 (영문자·숫자·언더스코어·하이픈, 최대 200자)

@@ -15,7 +15,11 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
     let center = UNUserNotificationCenter.current()
 
     // MARK: - Fixed Topic
+    
+    private let fixedTopicSignatureVersion = "v1"
 
+    /// legacy: 마지막으로 고정 토픽에 적용한 pushYN 값.
+    /// 1차 배포부터 고정 토픽 구독 여부는 토픽 규칙 signature로 판단한다.
     private var lastAppliedPushYn: String? {
         get { AppBoxCoreFramework.shared.coreGetLastAppliedPushYn() }
         set {
@@ -24,6 +28,19 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
             }
         }
     }
+    
+    /// 마지막으로 성공 적용한 고정 토픽 규칙 signature.
+    /// 1차 배포는 기존 정책인 projectId, "IOS" 2개 토픽을 v1 signature로 저장한다.
+    /// 다음 배포에서 IOS-{projectId} 규칙으로 바뀌면 signature가 달라져 자동 재동기화된다.
+    private var fixedTopicSignature: String? {
+        get { AppBoxCoreFramework.shared.coreGetFixedTopicSignature() }
+        set {
+            if let value = newValue {
+                AppBoxCoreFramework.shared.coreSaveFixedTopicSignature(value)
+            }
+        }
+    }
+    
     private var fixedTopics: [String] = []
 
     // MARK: - Topic Validation
@@ -72,6 +89,7 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
         AppBoxCoreFramework.shared.coreSaveProjectId(pId)
 
         let trimmedProjectId = pId.trimmingCharacters(in: .whitespacesAndNewlines)
+        // 1차 배포 고정 토픽 규칙: projectId, "IOS" 2개를 구독한다.
         fixedTopics = trimmedProjectId.isEmpty ? ["IOS"] : [trimmedProjectId, "IOS"]
 
         if let _ = FirebaseApp.app() {
@@ -449,20 +467,29 @@ class AppBoxNotificationRepository: NSObject, AppBoxNotificationProtocol {
 
 // MARK: - Fixed Topic (Private)
 private extension AppBoxNotificationRepository {
+    
+    func makeFixedTopicSignature(topics: [String]) -> String {
+        let normalizedTopics = topics
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .sorted()
+        
+        return "\(fixedTopicSignatureVersion)|topics=\(normalizedTopics.joined(separator: ","))"
+    }
 
     func processFixedTopicsIfNeeded() {
         let currentPushYn = AppBoxCoreFramework.shared.coreGetEffectivePushYn()
-        guard lastAppliedPushYn != currentPushYn else {
-            debugLog("processFixedTopics: 이미 처리됨(lastApplied=\(currentPushYn)), 스킵")
-            return
-        }
         guard !fixedTopics.isEmpty else {
             debugLog("processFixedTopics: 고정 토픽 없음")
-            lastAppliedPushYn = currentPushYn
+            return
+        }
+        let currentSignature = makeFixedTopicSignature(topics: fixedTopics)
+        guard fixedTopicSignature != currentSignature else {
+            debugLog("processFixedTopics: 이미 처리됨(signature=\(currentSignature)), 스킵")
             return
         }
         let shouldSubscribe = (currentPushYn == "Y")
-        debugLog("processFixedTopics: 시작 - pushYN=\(currentPushYn), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
+        debugLog("processFixedTopics: 시작 - pushYN=\(currentPushYn), signature=\(currentSignature), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
         let group = DispatchGroup()
         let lock = NSLock()
         var allSuccess = true
@@ -477,9 +504,12 @@ private extension AppBoxNotificationRepository {
             guard let self = self else { return }
             if allSuccess {
                 self.lastAppliedPushYn = currentPushYn
-                debugLog("processFixedTopics: 완료 - pushYN=\(currentPushYn), topics=\(self.fixedTopics)")
+                if shouldSubscribe {
+                    self.fixedTopicSignature = currentSignature
+                }
+                debugLog("processFixedTopics: 완료 - pushYN=\(currentPushYn), signature=\(currentSignature), topics=\(self.fixedTopics)")
             } else {
-                debugLog("processFixedTopics: 일부 실패, 다음 실행 시 재시도 (lastAppliedPushYn 미저장)")
+                debugLog("processFixedTopics: 일부 실패, 다음 실행 시 재시도 (상태 미저장)")
             }
         }
     }
@@ -487,7 +517,8 @@ private extension AppBoxNotificationRepository {
     func syncFixedTopics(pushYn: String) {
         guard !fixedTopics.isEmpty else { return }
         let shouldSubscribe = (pushYn == "Y")
-        debugLog("syncFixedTopics: 시작 - pushYN=\(pushYn), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
+        let currentSignature = makeFixedTopicSignature(topics: fixedTopics)
+        debugLog("syncFixedTopics: 시작 - pushYN=\(pushYn), signature=\(currentSignature), topics=\(fixedTopics), subscribe=\(shouldSubscribe)")
         let group = DispatchGroup()
         let lock = NSLock()
         var allSuccess = true
@@ -502,9 +533,12 @@ private extension AppBoxNotificationRepository {
             guard let self = self else { return }
             if allSuccess {
                 self.lastAppliedPushYn = pushYn
-                debugLog("syncFixedTopics: 완료 - pushYN=\(pushYn), topics=\(self.fixedTopics)")
+                if shouldSubscribe {
+                    self.fixedTopicSignature = currentSignature
+                }
+                debugLog("syncFixedTopics: 완료 - pushYN=\(pushYn), signature=\(currentSignature), topics=\(self.fixedTopics)")
             } else {
-                debugLog("syncFixedTopics: 일부 실패, 다음 실행 시 재시도 (lastAppliedPushYn 미저장)")
+                debugLog("syncFixedTopics: 일부 실패, 다음 실행 시 재시도 (상태 미저장)")
             }
         }
     }

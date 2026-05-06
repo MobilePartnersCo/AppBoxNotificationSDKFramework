@@ -51,6 +51,10 @@ import _SwiftConcurrencyShims
   #if compiler(>=5.3) && $NonescapableTypes
   @_spi(AppBoxNotification_Internal) func coreGetLastAppliedPushYn() -> Swift.String?
   #endif
+  @_spi(AppBoxNotification_Internal) func coreSaveFixedTopicSignature(_ signature: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(AppBoxNotification_Internal) func coreGetFixedTopicSignature() -> Swift.String?
+  #endif
   #if compiler(>=5.3) && $NonescapableTypes
   @_spi(AppBoxNotification_Internal) func coreFetchTopicFilter(eventType: Swift.String, topics: [Swift.String], completion: @escaping (Swift.Result<AppBoxCore.AppPushTopicFilterApiModel, any Swift.Error>) -> Swift.Void)
   #endif
@@ -95,6 +99,10 @@ import _SwiftConcurrencyShims
   @_spi(AppBoxNotification_Internal) public func coreSaveLastAppliedPushYn(_ pushYn: Swift.String)
   #if compiler(>=5.3) && $NonescapableTypes
   @_spi(AppBoxNotification_Internal) public func coreGetLastAppliedPushYn() -> Swift.String?
+  #endif
+  @_spi(AppBoxNotification_Internal) public func coreSaveFixedTopicSignature(_ signature: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(AppBoxNotification_Internal) public func coreGetFixedTopicSignature() -> Swift.String?
   #endif
   #if compiler(>=5.3) && $NonescapableTypes
   @_spi(AppBoxNotification_Internal) public func coreFetchTopicFilter(eventType: Swift.String, topics: [Swift.String], completion: @escaping (Swift.Result<AppBoxCore.AppPushTopicFilterApiModel, any Swift.Error>) -> Swift.Void)
